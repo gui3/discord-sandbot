@@ -32,6 +32,70 @@ client.on("message", message => {
         message.reply('Pong!');
         break;
       case "fight": //-----------------
+        var results = [];
+        var ignored = [];
+        var critical = [];
+        arguments.forEach((arg, ix) => {
+          var stat = parseInt(arg);
+          if (!(stat>0)) {
+            ignored.push(arg);
+          } else {
+            var dice = dices("1d100");
+            if (dice.sum === 1) {
+              critical.push({
+                type: "-1d100"
+                result: - dices("1d100").sum
+              });
+            } else if (dice.sum === 100) {
+              critical.push({
+                type: "1d100"
+                result: dices("1d100").sum
+              });
+            } else if (dice.sum < 6) {
+              critical.push({
+                type: "-1d20"
+                result: - dices("1d20").sum
+              });
+            } else if (dice.sum < 6) {
+              critical.push({
+                type: "1d20"
+                result: dices("1d20").sum
+              });
+            }
+            var result = dice + stat;
+            if (ix > 0) {
+              result = result /2
+            }
+            results.push({
+              dice: dice,
+              stat: stat,
+              result: result
+            });
+          }
+        });
+        var reply = "";
+        var sum = 0;
+        results.forEach(res => {
+          reply += res.stat+":"+res.dice + "=>"+res.result+"\n";
+          sum += res.result;
+        });
+        if (critical) {
+          critical.forEach(c => {
+            reply += c.type + "=" + c.result + " ";
+            sum += c.result;
+          });
+          reply +="\n";
+        }
+        reply += "RESULT : "+ sum
+
+        if (ignored) {
+          reply += "ignored arguments :";
+          ignored.forEach(ign => {
+            reply += " " + ign;
+          })
+        }
+
+        message.reply(reply);
 
         break;
       case "roll": //-----------------
@@ -39,10 +103,8 @@ client.on("message", message => {
         if (argument.match(/^(\d+d\d+)$/)) {
           var results = dices(argument);
 
-          var reply = "rolled "+argument+"\nresult(s) :"
-          results.dices.forEach(r => {
-            reply += " "+r;
-          });
+          var reply = "rolled "+argument
+          reply += "\nresult(s) : " + String(results.dices);
           if (results.dices.length > 1) {
             reply += "\nsum : "+results.sum;
           }
