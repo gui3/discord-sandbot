@@ -1,6 +1,6 @@
 module.exports = (string) => {
   var [dices, faces] = string.split("d").map(x => parseInt(x)),
-    result = {
+    results = {
       dices: [],
       sum:0
     };
@@ -11,5 +11,5 @@ module.exports = (string) => {
 
   results.sum = results.dices.reduce((a,b)=>a+b);
 
-  return reply
+  return results
 }
