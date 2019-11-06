@@ -31,7 +31,7 @@ client.on("message", message => {
       case "ping": //-----------------
         message.reply('Pong!');
         break;
-      case "fight": //-----------------
+      case "sos": //-----------------
         var results = [];
         var ignored = [];
         var critical = [];
@@ -40,23 +40,23 @@ client.on("message", message => {
           if (!(stat>0)) {
             ignored.push(arg);
           } else {
-            var dice = dices("1d100");
-            if (dice.sum === 1) {
+            var dice = dices("1d100").sum;
+            if (dice === 1) {
               critical.push({
                 type: "-1d100",
                 result: - dices("1d100").sum
               });
-            } else if (dice.sum === 100) {
+            } else if (dice === 100) {
               critical.push({
                 type: "1d100",
                 result: dices("1d100").sum
               });
-            } else if (dice.sum < 6) {
+            } else if (dice < 6) {
               critical.push({
                 type: "-1d20",
                 result: - dices("1d20").sum
               });
-            } else if (dice.sum < 6) {
+            } else if (dice > 94) {
               critical.push({
                 type: "1d20",
                 result: dices("1d20").sum
