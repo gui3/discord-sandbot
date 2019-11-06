@@ -37,7 +37,7 @@ client.on("message", message => {
       case "roll": //-----------------
         var argument = arguments.join("");
         if (argument.match(/^(\d+d\d+)$/)) {
-          var results = dices(argument)
+          var results = dices(argument);
 
           var reply = "rolled "+argument+"\nresult(s) :"
           results.dices.forEach(r => {
