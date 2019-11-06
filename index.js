@@ -89,7 +89,7 @@ client.on("message", message => {
         reply += "RESULT : "+ sum
 
         if (ignored) {
-          reply += "ignored arguments :";
+          reply += "\n\nignored arguments :";
           ignored.forEach(ign => {
             reply += " " + ign;
           })
