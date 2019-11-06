@@ -19,6 +19,7 @@ client.on("ready", client => {
 
 
 // MESSAGES & COMMANDS -----------------------
+const dices = require("./helpers/dices")
 client.on("message", message => {
 
   //Commands
@@ -30,22 +31,20 @@ client.on("message", message => {
       case "ping": //-----------------
         message.reply('Pong!');
         break;
+      case "fight": //-----------------
+
+        break;
       case "roll": //-----------------
         var argument = arguments.join("");
         if (argument.match(/^(\d+d\d+)$/)) {
-          var [dices, faces] = argument.split("d").map(x => parseInt(x)),
-            results = [];
-
-          for (var i = 0; i< dices; i++) {
-            results.push(Math.floor(Math.random()*faces+1));
-          }
+          var results = dices(argument)
 
           var reply = "rolled "+argument+"\nresult(s) :"
-          results.forEach(r => {
+          results.dices.forEach(r => {
             reply += " "+r;
           });
           if (dices > 1) {
-            reply += "\nsum : "+results.reduce((a,b)=>a+b);
+            reply += "\nsum : "+results.sum;
           }
 
           message.reply(reply)
