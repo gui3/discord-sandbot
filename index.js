@@ -14,15 +14,14 @@ const client = new Discord.Client()
 
 // READY -------------------------------------
 client.on("ready", client => {
-  console.log(`Logged in as ${client.user.tag}!`)
+  console.log(`Logged in !`)
 });
 
 
 // MESSAGES & COMMANDS -----------------------
-const kick = require('./commands/kick')
-
 client.on("message", (client, message) => {
   message.reply("message recieved!");
+
   //Commands
   if (message.content.match(/^![^ \r\n]/)) { //you talking to the bot
     var arguments = message.content.slice(1).split(/ +/);
