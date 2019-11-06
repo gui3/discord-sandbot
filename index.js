@@ -43,7 +43,7 @@ client.on("message", message => {
           results.dices.forEach(r => {
             reply += " "+r;
           });
-          if (dices > 1) {
+          if (results.dices.length > 1) {
             reply += "\nsum : "+results.sum;
           }
 
