@@ -4,13 +4,7 @@ const fs = require('fs')
 
 const client = new Discord.Client()
 
-// fs.readdir('./events/', (err, files) => {
-//   files.forEach(file => {
-//     const eventHandler = require(`./events/${file}`)
-//     const eventName = file.split('.')[0]
-//     client.on(eventName, (...args) => eventHandler(client, ...args))
-//   })
-// })
+const queue = new Map();
 
 // READY -------------------------------------
 client.on("ready", client => {
@@ -20,6 +14,7 @@ client.on("ready", client => {
 
 // MESSAGES & COMMANDS -----------------------
 const dices = require("./helpers/dices")
+const music = require("./helpers/music")
 client.on("message", message => {
 
   //Commands
@@ -27,10 +22,26 @@ client.on("message", message => {
     var arguments = message.content.slice(1).split(/ +/);
     var command = arguments.shift();
 
+    const serverQueue = queue.get(message.guild.id);
+
     switch (command) {
       case "ping": //-----------------
         message.reply('Pong!');
         break;
+
+      case "play": //------------------
+        music.execute(message, serverQueue);
+        break;
+
+      case "skip": //------------------
+        music.skip(message, serverQueue);
+        break;
+
+      case "stop": //------------------
+        music.stop(message, serverQueue);
+        break;
+
+
       case "sos": //-----------------
         var results = [];
         var ignored = [];
@@ -73,13 +84,13 @@ client.on("message", message => {
             });
           }
         });
-        var reply = "resultat du fight :\n";
+        var reply = "resultat du fight : "+sum+"\n";
         var sum = 0;
         results.forEach(res => {
           reply += res.stat+" dé:"+res.dice + " = "+res.result+"\n";
           sum += res.result;
         });
-        if (critical !== []) {
+        if (critical != []) {
           reply += "\nCritiques :"
           critical.forEach(c => {
             reply += c.type + ":" + c.result + " ";
@@ -87,10 +98,9 @@ client.on("message", message => {
           });
           reply +="\n";
         }
-        reply += "RESULTAT : "+ sum
 
-        if (ignored !== []) {
-          reply += "\n\nignored arguments :";
+        if (ignored != []) {
+          reply += "\nignored arguments :";
           ignored.forEach(ign => {
             reply += " " + ign;
           })
@@ -99,6 +109,7 @@ client.on("message", message => {
         message.reply(reply);
 
         break;
+
       case "roll": //-----------------
         var argument = arguments.join("");
         if (argument.match(/^(\d+d\d+)$/)) {
@@ -116,6 +127,7 @@ client.on("message", message => {
           message.reply("Tell me the dice(s) to roll like that : !roll 2d20");
         }
         break;
+
       default: //---------------------
         message.reply("I don't know the command : "+command)
     }
