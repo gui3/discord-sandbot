@@ -30,7 +30,7 @@ client.on("message", message => {
         break;
 
       case "play": //------------------
-        music.execute(message, serverQueue);
+        music.execute(message, serverQueue, queue);
         break;
 
       case "skip": //------------------

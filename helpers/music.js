@@ -1,7 +1,7 @@
 
 const ytdl = require('ytdl-core');
 
-async function execute(message, serverQueue) {
+async function execute(message, serverQueue, queue) {
 	const args = message.content.split(' ');
 
 	const voiceChannel = message.member.voiceChannel;
@@ -34,7 +34,7 @@ async function execute(message, serverQueue) {
 		try {
 			var connection = await voiceChannel.join();
 			queueContruct.connection = connection;
-			play(message.guild, queueContruct.songs[0]);
+			play(message.guild, queueContruct.songs[0], queue);
 		} catch (err) {
 			console.log(err);
 			queue.delete(message.guild.id);
@@ -60,7 +60,7 @@ function stop(message, serverQueue) {
 	serverQueue.connection.dispatcher.end();
 }
 
-function play(guild, song) {
+function play(guild, song, queue) {
 	const serverQueue = queue.get(guild.id);
 
 	if (!song) {
@@ -73,7 +73,7 @@ function play(guild, song) {
 		.on('end', () => {
 			console.log('Music ended!');
 			serverQueue.songs.shift();
-			play(guild, serverQueue.songs[0]);
+			play(guild, serverQueue.songs[0], queue);
 		})
 		.on('error', error => {
 			console.error(error);
