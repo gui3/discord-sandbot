@@ -42,9 +42,11 @@ client.on("message", message => {
 
           var reply = "rolled "+argument+"\nresult(s) :"
           results.forEach(r => {
-            reply += " "+r
+            reply += " "+r;
           });
-          if (dices < 1) {reply += "\nsum : "+results.reduce((a,b)=>a+b)}
+          if (dices > 1) {
+            reply += "\nsum : "+results.reduce((a,b)=>a+b);
+          }
 
           message.reply(reply)
         }
