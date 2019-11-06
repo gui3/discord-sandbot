@@ -43,22 +43,22 @@ client.on("message", message => {
             var dice = dices("1d100");
             if (dice.sum === 1) {
               critical.push({
-                type: "-1d100"
+                type: "-1d100",
                 result: - dices("1d100").sum
               });
             } else if (dice.sum === 100) {
               critical.push({
-                type: "1d100"
+                type: "1d100",
                 result: dices("1d100").sum
               });
             } else if (dice.sum < 6) {
               critical.push({
-                type: "-1d20"
+                type: "-1d20",
                 result: - dices("1d20").sum
               });
             } else if (dice.sum < 6) {
               critical.push({
-                type: "1d20"
+                type: "1d20",
                 result: dices("1d20").sum
               });
             }
