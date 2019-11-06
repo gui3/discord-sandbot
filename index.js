@@ -22,9 +22,9 @@ client.on("ready", client => {
 const kick = require('./commands/kick')
 
 client.on("message", (client, message) => {
-
+  message.reply("message recieved!");
   //Commands
-  if (message.content.match(/^![^ \r\n]/g)) { //you talking to the bot
+  if (message.content.match(/^![^ \r\n]/)) { //you talking to the bot
     var arguments = message.content.slice(1).split(/ +/);
     var command = arguments.shift();
 
