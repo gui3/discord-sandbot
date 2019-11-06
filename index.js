@@ -73,22 +73,23 @@ client.on("message", message => {
             });
           }
         });
-        var reply = "";
+        var reply = "resultat du fight :\n";
         var sum = 0;
         results.forEach(res => {
-          reply += res.stat+":"+res.dice + "=>"+res.result+"\n";
+          reply += res.stat+" dé:"+res.dice + " = "+res.result+"\n";
           sum += res.result;
         });
-        if (critical) {
+        if (critical !== []) {
+          reply += "\nCritiques :"
           critical.forEach(c => {
-            reply += c.type + "=" + c.result + " ";
+            reply += c.type + ":" + c.result + " ";
             sum += c.result;
           });
           reply +="\n";
         }
-        reply += "RESULT : "+ sum
+        reply += "RESULTAT : "+ sum
 
-        if (ignored) {
+        if (ignored !== []) {
           reply += "\n\nignored arguments :";
           ignored.forEach(ign => {
             reply += " " + ign;
