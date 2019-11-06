@@ -19,8 +19,7 @@ client.on("ready", client => {
 
 
 // MESSAGES & COMMANDS -----------------------
-client.on("message", (client, message) => {
-  message.reply("message recieved!");
+client.on("message", message => {
 
   //Commands
   if (message.content.match(/^![^ \r\n]/)) { //you talking to the bot
