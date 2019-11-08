@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 require('dotenv').config()
 
-const client = new Discord.Client()
+var client = new Discord.Client()
 
 
 client.playing = 0
