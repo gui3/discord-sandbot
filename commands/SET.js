@@ -11,6 +11,9 @@ module.exports = {
     else {
       message.guild.guildVars[arguments[0]] = arguments[1]
       reply = arguments[0]+" successfully set to "+arguments[1];
+      console.log(arguments[0]+" successfully set to "+arguments[1]);
+      console.log("new guildVars :");
+      console.log(message.guild.guildVars)
       if (arguments[0] == "prefix") {
         message.guild.channels.array().forEach(c=>{
           if (c.type == "text") {

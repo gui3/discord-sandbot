@@ -59,7 +59,8 @@ client.on("message", message => {
     new RegExp("^"+message.guild.guildVars.prefix+"[^ \r\n]")
   )) {
     //you talking to the bot
-    var arguments = message.content.slice(1).split(/ +/);
+    var arguments = message.content
+      .slice(message.guild.guildVars.prefix.length).split(/ +/);
     var command = arguments.shift();
 
     var reply = "command " + message.content + " :\n"
