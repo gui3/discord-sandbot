@@ -35,6 +35,6 @@ module.exports = function (message) {
     message.reply(reply);
   }
   else if (message.content === "OUI OU MERDE ?") {
-    message.reply(["OUI","MERDE","ZBRADARALDJAN"][Math.floor(Math.random() * 3)]
+    message.reply(["OUI","MERDE","ZBRADARALDJAN"][Math.floor(Math.random() * 3)]);
   };
 };
