@@ -4,6 +4,8 @@ require('dotenv').config()
 const client = new Discord.Client()
 
 
+client.playing = 0
+
 // READY -------------------------------------
 client.on("ready", client => {
   console.log(`Logged in !`)
@@ -13,7 +15,7 @@ client.on("ready", client => {
 // MESSAGES & COMMANDS -----------------------
 const interpreter = require("./commands/_interpreter")
 client.on("message", message => {
-  interpreter(message);
+  interpreter(message, client);
 });
 
 // NEW MEMBER --------------------------------

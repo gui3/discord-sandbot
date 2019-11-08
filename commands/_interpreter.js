@@ -1,8 +1,9 @@
 const roll = require("./roll");
 const sos = require("./sos");
 const mar = require("./mar");
+const play = require("./play");
 
-module.exports = function (message) {
+module.exports = function (message, client) {
 
   //Commands ----------------------
   if (message.content.match(/^![^ \r\n]/)) { //you talking to the bot
@@ -12,20 +13,33 @@ module.exports = function (message) {
     var reply = "command " + message.content + " :\n"
 
     switch (command) {
-      case "ping": //-----------------
+      case "ping":
         reply += 'Pong!';
         break;
 
-      case "sos": //-----------------
+      case "sos":
         reply += sos(arguments);
         break;
 
-      case "mar": //-----------------
+      case "mar":
         reply += mar(arguments);
         break;
 
-      case "roll": //-----------------
+      case "roll":
         reply += roll(arguments);
+        break;
+
+      case "play":
+        reply += play(arguments)
+        break;
+
+      case "play":
+        reply += play(arguments)
+        break;
+
+      case "vartest"
+        reply =+ "client.playing = " + client.playing;
+        client.playing += 1;
         break;
 
       default: //---------------------
