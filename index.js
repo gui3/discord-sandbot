@@ -55,12 +55,10 @@ fs.readdir("./commands", (err, files) => {
 
 client.on("message", message => {
 
-  if (message.content.match(
-    new RegExp("^"+message.guild.guildVars.prefix+"[^ \r\n]")
-  )) {
+  if (message.content.startsWith(message.guild.guildVars.prefix)) {
     //you talking to the bot
     var arguments = message.content
-      .slice(message.guild.guildVars.prefix.length).split(/ +/);
+      .slice(message.guild.guildVars.prefix.length).split(/[ \r\n]+/);
     var command = arguments.shift();
 
     var reply = "command " + message.content + " :\n"
