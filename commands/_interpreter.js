@@ -38,7 +38,7 @@ module.exports = function (message, client) {
         break;
 
       case "vartest":
-        reply =+ "client.playing = " + client.playing;
+        reply += "client.playing = " + client.playing;
         client.playing += 1;
         break;
 
