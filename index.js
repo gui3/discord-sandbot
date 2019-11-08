@@ -54,8 +54,35 @@ fs.readdir("./commands", (err, files) => {
 })
 
 client.on("message", message => {
-  interpreter(message, client);
+
+  if (message.content.match(
+    new RegExp("^"+message.guild.guildVars.prefix+"[^ \r\n]")
+  )) {
+    //you talking to the bot
+    var arguments = message.content.slice(1).split(/ +/);
+    var command = arguments.shift();
+
+    var reply = "command " + message.content + " :\n"
+
+    if (client.botVars.commands[command]) {
+      reply += client.botVars.commands[command].function(arguments, message)
+    }
+    else {
+      reply =+ "commande inconnue ..."
+    }
+
+    message.delete();
+    message.reply(reply);
+  }
+
+  else if (message.content.match(/OUI OU MERDE/i)) { // outil décisionnel
+    message.reply(["OUI","OUI","OUI",
+      "MERDE","MERDE","MERDE",
+      "ZBRADARALDJAN"]
+      [Math.floor(Math.random() * 7)]);
+  };
 });
+
 
 // NEW MEMBER --------------------------------
 client.on("guildMemberAdd", (client, member) => {
