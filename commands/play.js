@@ -28,9 +28,8 @@ module.exports = {
       return duration;
     };
 
-    function playSong (song, message) {
-      var voiceChannel = song.voiceChannel;
-      song.voiceChannel
+    function playSong (song, voiceChannel, message) {
+      voiceChannel
         .join() // join the user's voice channel
         .then(connection => {
           const streamOptions = { seek: 0, volume: 0.2 };
@@ -86,9 +85,8 @@ module.exports = {
           thumbnail,
           voiceChannel
         };
-        //voiceChannel.currentlyPlaying = song;
         voiceChannel.currentlyPlaying = song;
-        playSong(voiceChannel.currentlyPlaying, message);
+        playSong(song, voiceChannel, message);
 
       } catch (err) {
         console.error(err);
