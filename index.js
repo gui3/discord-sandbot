@@ -8,7 +8,7 @@ client.botVars = {}
 // READY -------------------------------------
 function botReboot(guild) {
   function getFirstChan () {
-    return guild.channels.array().sort((a,b)=>a.createdAt-b.createdAt))
+    return guild.channels.array().sort((a,b)=>a.createdAt-b.createdAt);
   };
   guild.guildVars = {
     prefix: "!",
