@@ -47,7 +47,7 @@ module.exports = function (message, client) {
         break;
 
       case "test:member.guild":
-        reply += "message.member.guild.testvar = "message.member.guild.testvar;
+        reply += "message.member.guild.testvar = " + message.member.guild.testvar;
         break;
 
       default: //---------------------
