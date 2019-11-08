@@ -43,7 +43,7 @@ module.exports = function (message, client) {
           reply += "INITIALIZED member.testvar\n"
         }
         reply += "member.testvar = " + message.member.testvar;
-        message.guild.testvar += 1;
+        message.member.testvar += 1;
         break;
 
       default: //---------------------
