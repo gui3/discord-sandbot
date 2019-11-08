@@ -15,11 +15,11 @@ function botReboot(guild) {
     mainChan: getFirstChan(),
     getFirstChan: getFirstChan,
   };
-  guild.channels.array().forEach(chan => {
-    if (chan.type === "text") {
-      chan.send("Bonjour ! on vient de me rebooter !");
-    }
-  });
+  // guild.channels.array().forEach(chan => {
+  //   if (chan.type === "text") {
+  //     chan.send("Bonjour ! on vient de me rebooter !");
+  //   }
+  // });
 }
 
 client.on("ready", c => {
