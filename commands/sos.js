@@ -34,13 +34,16 @@ module.exports = function (message, arguments) {
         });
       }
       var result = dice + stat;
+      var modif = "";
       if (ix > 0) {
-        result = result /2
+        result = result /2;
+        modif = "/2";
       }
       results.push({
         dice: dice,
         stat: stat,
-        result: result
+        result: result,
+        modif: modif
       });
     }
   });
@@ -49,7 +52,7 @@ module.exports = function (message, arguments) {
   var sum = 0;
 
   results.forEach(res => {
-    reply += res.stat+" dé:"+res.dice + " = "+res.result+"\n";
+    reply += res.stat+" dé:"+res.dice + " " + res.modif " = "+res.result+"\n";
     sum += res.result;
   });
 
