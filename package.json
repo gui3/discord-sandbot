@@ -8,9 +8,6 @@
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
-  "engines": {
-    "node": "8.11.2"
-  },
   "dependencies": {
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
