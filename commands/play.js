@@ -10,7 +10,7 @@ module.exports = {
   async: true,
   function: async function (arguments, message) {
     //check if voice channel
-    var voiceChannel = message.member.voice.channel;
+    var voiceChannel = message.member.voiceChannel;
     if (!voiceChannel) return 'Il faut être connecté à un salon vocal !';
 
     var query = arguments.join(" ");
