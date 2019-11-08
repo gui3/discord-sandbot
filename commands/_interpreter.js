@@ -6,6 +6,8 @@ module.exports = function (message) {
 
   //Commands ----------------------
   if (message.content.match(/^![^ \r\n]/)) { //you talking to the bot
+    message.reply(message.content);
+
     var arguments = message.content.slice(1).split(/ +/);
     var command = arguments.shift();
 
@@ -29,5 +31,6 @@ module.exports = function (message) {
       default: //---------------------
         message.reply("I don't know the command : "+command)
     }
+    message.delete();
   }
 };
