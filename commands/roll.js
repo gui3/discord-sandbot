@@ -1,10 +1,10 @@
-const dices = require("../helpers/dices");
+const rollDice = require("../helpers/rollDice");
 
 module.exports = function (message, arguments) {
 
   var argument = arguments.join("");
   if (argument.match(/^(\d+d\d+)$/)) {
-    var results = dices(argument);
+    var results = rollDice(argument);
 
     var reply = "rolled "+argument
     reply += "\nresult(s) : " + String(results.dices);

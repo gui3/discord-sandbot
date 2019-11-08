@@ -1,4 +1,4 @@
-const dices = require("../helpers/dices");
+const rollDice = require("../helpers/rollDice");
 
 module.exports = function (message, arguments) {
 
@@ -10,26 +10,26 @@ module.exports = function (message, arguments) {
     if (!(stat>0)) {
       ignored.push(arg);
     } else {
-      var dice = dices("1d100").sum;
+      var dice = rollDice("1d100").sum;
       if (dice === 1) {
         critical.push({
           type: "-1d100",
-          result: - dices("1d100").sum
+          result: - rollDice("1d100").sum
         });
       } else if (dice === 100) {
         critical.push({
           type: "1d100",
-          result: dices("1d100").sum
+          result: rollDice("1d100").sum
         });
       } else if (dice < 6) {
         critical.push({
           type: "-1d20",
-          result: - dices("1d20").sum
+          result: - rollDice("1d20").sum
         });
       } else if (dice > 94) {
         critical.push({
           type: "1d20",
-          result: dices("1d20").sum
+          result: rollDice("1d20").sum
         });
       }
       var result = dice + stat;
@@ -43,7 +43,7 @@ module.exports = function (message, arguments) {
       });
     }
   });
-  
+
   var reply = "resultat du fight : "+sum+"\n";
   var sum = 0;
 
