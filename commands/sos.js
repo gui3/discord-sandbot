@@ -48,7 +48,7 @@ module.exports = function (arguments) {
     }
   });
 
-  var reply = "COMBAT en mode ENCERCLE ___\n";
+  var reply = "COMBAT en mode 1vsN ___\n";
   var sum = 0;
 
   results.forEach(res => {
