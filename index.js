@@ -64,12 +64,12 @@ client.on("message", async message => {
     var reply = "command " + message.content + " :\n"
 
     if (client.botVars.commands[command]) {
-      let command = reply += client.botVars.commands[command]
+      let command = client.botVars.commands[command]
       if (command.async) {
-        await command.function(arguments, message);
+        reply += await command.function(arguments, message);
       }
       else {
-        command.function(arguments,message);
+        reply += command.function(arguments,message);
       }
     }
     else {
