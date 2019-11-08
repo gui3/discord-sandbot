@@ -1,10 +1,7 @@
 const Discord = require('discord.js')
 require('dotenv').config()
 
-var client = new Discord.Client()
-
-
-client.playing = 0
+const client = new Discord.Client()
 
 // READY -------------------------------------
 client.on("ready", client => {

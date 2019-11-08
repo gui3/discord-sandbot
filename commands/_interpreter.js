@@ -37,9 +37,13 @@ module.exports = function (message, client) {
         reply += stop(arguments)
         break;
 
-      case "vartest":
-        reply += "client.playing = " + client.playing;
-        client.playing += 1;
+      case "guildtest":
+        if (!message.guild.testvar) {
+          message.guild.testvar = 0;
+          reply =+ "INITIALIZED message.guild.testvar\n"
+        }
+        reply += "message.guild.testvar = " + message.guild.testvar;
+        message.guild.testvar += 1;
         break;
 
       default: //---------------------
