@@ -34,7 +34,7 @@ module.exports = function (message) {
     message.delete();
     message.reply(reply);
   }
-  else if (message.content.match(/OUI OU MERDE/)) { // outil décisionnel
+  else if (message.content.match(/OUI OU MERDE/i)) { // outil décisionnel
     message.reply(["OUI","OUI","OUI",
       "MERDE","MERDE","MERDE",
       "ZBRADARALDJAN"]
