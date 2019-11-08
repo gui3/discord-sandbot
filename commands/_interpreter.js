@@ -37,15 +37,6 @@ module.exports = function (message, client) {
         reply += stop(arguments)
         break;
 
-      case "test":
-        if (!message.member.user.testvar) {
-          message.member.user.testvar = 0;
-          reply += "INITIALIZED user.testvar\n"
-        }
-        reply += "user.testvar = " + message.member.user.testvar;
-        message.member.user.testvar += 1;
-        break;
-
       default: //---------------------
         reply += "I don't know the command : "+command;
     }
