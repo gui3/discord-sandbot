@@ -16,7 +16,9 @@ function botReboot(guild) {
     getFirstChan: getFirstChan,
   };
   guild.channels.array().forEach(chan => {
-    chan.send("Bonjour ! on vient de me rebooter !");
+    if (chan.type === "text") {
+      chan.send("Bonjour ! on vient de me rebooter !");
+    }
   });
 }
 
