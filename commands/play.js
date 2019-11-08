@@ -38,6 +38,7 @@ module.exports = {
             .playStream(
               ytdl(song.url, { // pass the url to .ytdl()
                 quality: 'highestaudio',
+                filter: 'audioonly',
                 // download part of the song before playing it
                 // helps reduces stuttering
                 highWaterMark: 1024 * 1024 * 10
