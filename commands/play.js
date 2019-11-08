@@ -33,7 +33,7 @@ module.exports = {
       song.voiceChannel
         .join() // join the user's voice channel
         .then(connection => {
-          const streamOptions = { seek: 0, volume: 0.5 };
+          const streamOptions = { seek: 0, volume: 0.2 };
           const dispatcher = connection
             .playStream(
               ytdl(song.url, { // pass the url to .ytdl()
@@ -47,7 +47,7 @@ module.exports = {
             )
             .on('start', () => {
               // the following line is essential to other commands like skip
-              //voiceChannel.songDispatcher = dispatcher;
+              voiceChannel.songDispatcher = dispatcher;
               //return queue.shift(); //  dequeue the song
             })
             .on('finish', () => { // this event fires when the song has ended
