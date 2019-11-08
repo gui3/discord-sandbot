@@ -15,6 +15,19 @@ module.exports = {
 
     var query = arguments.join(" ");
 
+    function formatDuration (durationObj) {
+      const duration = `${durationObj.hours ? durationObj.hours + ':' : ''}${
+        durationObj.minutes ? durationObj.minutes : '00'
+      }:${
+        durationObj.seconds < 10
+          ? '0' + durationObj.seconds
+          : durationObj.seconds
+          ? durationObj.seconds
+          : '00'
+      }`;
+      return duration;
+    };
+
     function playSong (song, message) {
       var voiceChannel = song.voiceChannel;
       song.voiceChannel
@@ -60,7 +73,7 @@ module.exports = {
         const id = query[2].split(/[^0-9a-z_\-]/i)[0];
         const video = await youtube.getVideoByID(id);
         const title = video.title;
-        let duration = this.formatDuration(video.duration);
+        let duration = formatDuration(video.duration);
         const thumbnail = video.thumbnails.high.url;
         if (duration == '00:00') duration = 'Live Stream';
         const song = {
