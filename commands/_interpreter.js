@@ -33,11 +33,11 @@ module.exports = function (message, client) {
         reply += play(arguments)
         break;
 
-      case "play":
-        reply += play(arguments)
+      case "stop":
+        reply += stop(arguments)
         break;
 
-      case "vartest"
+      case "vartest":
         reply =+ "client.playing = " + client.playing;
         client.playing += 1;
         break;
