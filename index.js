@@ -68,7 +68,7 @@ client.on("message", message => {
       reply += client.botVars.commands[command].function(arguments, message)
     }
     else {
-      reply =+ "commande inconnue ..."
+      reply += "commande inconnue ..."
     }
 
     message.delete();
