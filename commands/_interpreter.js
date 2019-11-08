@@ -29,7 +29,7 @@ module.exports = function (message) {
         break;
 
       default: //---------------------
-        reply += "I don't know the command : "+command)
+        reply += "I don't know the command : "+command;
     }
     message.delete();
     message.reply(reply);
