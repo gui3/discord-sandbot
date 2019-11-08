@@ -5,10 +5,10 @@ module.exports = function (message, arguments) {
   var results = [];
   var ignored = [];
   var critical = [];
-  
+
   arguments.forEach((arg, ix) => {
-    var stat = parseInt(arg);
-    if (!(stat>0)) {
+    var stat = parseFloat(arg);
+    if (isNaN(stat)) {
       ignored.push(arg);
     } else {
       var dice = rollDice("1d100").sum;
@@ -56,7 +56,7 @@ module.exports = function (message, arguments) {
   if (critical.length > 0) {
     reply += "\nCritiques :"
     critical.forEach(c => {
-      reply += c.type + ":" + c.result + " ";
+      reply += "\n" + c.type + ":" + c.result + " ";
       sum += c.result;
     });
   }
@@ -68,7 +68,7 @@ module.exports = function (message, arguments) {
     })
     reply += ")"
   }
-  reply += "resultat du fight : "+sum
+  reply += "\nresultat du fight : "+sum
 
   message.reply(reply);
 
