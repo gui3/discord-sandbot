@@ -1,6 +1,8 @@
 module.exports = {
-  name: "ping",
-  help: "vérifie si le bot fonctionne, si oui, il réponds **Pong!**",
+  name: "SET",
+  help: "**ATTENTION DANGER** change une variable de serveur\n"+
+    "par exemple *!SET prefix $* changera le préfixe des commandes\n"+
+    "a utiliser si on sait ce qu'on fait ...",
   function: function (arguments, message) {
     var reply = "";
     if (arguments.length != 2) {
