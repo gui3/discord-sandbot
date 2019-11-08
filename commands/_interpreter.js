@@ -37,17 +37,13 @@ module.exports = function (message, client) {
         reply += stop(arguments)
         break;
 
-      case "test:message.guild":
-        if (!message.guild.testvar) {
-          message.guild.testvar = 0;
-          reply += "INITIALIZED message.guild.testvar\n"
+      case "test":
+        if (!message.member.testvar) {
+          message.member.testvar = 0;
+          reply += "INITIALIZED member.testvar\n"
         }
-        reply += "message.guild.testvar = " + message.guild.testvar;
+        reply += "member.testvar = " + message.member.testvar;
         message.guild.testvar += 1;
-        break;
-
-      case "test:member.guild":
-        reply += "message.member.guild.testvar = " + message.member.guild.testvar;
         break;
 
       default: //---------------------
