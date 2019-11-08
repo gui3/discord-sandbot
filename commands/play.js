@@ -33,14 +33,16 @@ module.exports = {
       song.voiceChannel
         .join() // join the user's voice channel
         .then(connection => {
+          const streamOptions = { seek: 0, volume: 0.5 };
           const dispatcher = connection
-            .play(
+            .playStream(
               ytdl(song.url, { // pass the url to .ytdl()
                 quality: 'highestaudio',
                 // download part of the song before playing it
                 // helps reduces stuttering
                 highWaterMark: 1024 * 1024 * 10
-              })
+              }),
+              streamOptions
             )
             .on('start', () => {
               // the following line is essential to other commands like skip
