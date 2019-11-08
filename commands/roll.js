@@ -12,9 +12,9 @@ module.exports = function (message, arguments) {
       reply += "\nsum : "+results.sum;
     }
 
-    message.reply(reply)
+    return reply
   }
   else {
-    message.reply("Tell me the dice(s) to roll like that : !roll 2d20");
+    return "Tell me the dice(s) to roll like that : !roll 2d20";
   }
 }

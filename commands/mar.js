@@ -1,6 +1,6 @@
 const rollDice = require("../helpers/rollDice");
 
-module.exports = function (message, arguments) {
+module.exports = function (arguments) {
 
   var results = [];
   var ignored = [];
@@ -74,6 +74,6 @@ module.exports = function (message, arguments) {
   }
   reply += "\nresultat du fight : "+sum
 
-  message.reply(reply);
+  return reply;
 
 }
