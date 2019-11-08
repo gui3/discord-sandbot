@@ -1,6 +1,6 @@
 const rollDice = require("../helpers/rollDice");
 
-module.exports = function (message, arguments) {
+module.exports = function (arguments) {
 
   var argument = arguments.join("");
   if (argument.match(/^(\d+d\d+)$/)) {

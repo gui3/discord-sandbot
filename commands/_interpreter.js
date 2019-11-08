@@ -9,7 +9,7 @@ module.exports = function (message) {
     var arguments = message.content.slice(1).split(/ +/);
     var command = arguments.shift();
 
-    var reply = message.content + "\n"
+    var reply = "command " + message.content + " :\n"
 
     switch (command) {
       case "ping": //-----------------
