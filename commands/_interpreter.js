@@ -38,7 +38,7 @@ module.exports = function (message, client) {
         break;
 
       case "test":
-        if (!message.member.testvar) {
+        if (!message.member.user.testvar) {
           message.member.user.testvar = 0;
           reply += "INITIALIZED user.testvar\n"
         }
