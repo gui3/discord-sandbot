@@ -3,24 +3,30 @@ const fs = require("fs");
 require('dotenv').config();
 
 const client = new Discord.Client();
+client.botVars = {}
 
 // READY -------------------------------------
+function botReboot(guild) {
+
+}
+
 client.on("ready", c => {
   console.log(`Logged in !`);
   client.guilds.forEach(guild => {
     console.log('Connected to guild : ' + guild.name);
+    botReboot(guild);
   });
 });
 
 //joined a server
 client.on("guildCreate", guild => {
     console.log("Joined a new guild: " + guild.name);
-    //Your other stuff like adding to guildArray
+    botReboot(guild);
 })
 
 
 // MESSAGES & COMMANDS -----------------------
-var commands = {};
+client.botVars.commands = {};
 fs.readdir("./commands", (err, files) => {
   files.forEach( file => {
     try {
@@ -28,7 +34,7 @@ fs.readdir("./commands", (err, files) => {
       if (!(command.name && typeof command.function == "function" )) {
         throw new Error("could not load command file " + file)
       }
-      commands[command.name] = command;
+      client.botVars.commands[command.name] = command;
     } catch (e) {
       console.log(e.message)
     }
