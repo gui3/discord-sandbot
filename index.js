@@ -53,7 +53,7 @@ fs.readdir("./commands", (err, files) => {
   })
 })
 
-client.on("message", message => {
+client.on("message", async message => {
 
   if (message.content.startsWith(message.guild.guildVars.prefix)) {
     //you talking to the bot
@@ -64,7 +64,13 @@ client.on("message", message => {
     var reply = "command " + message.content + " :\n"
 
     if (client.botVars.commands[command]) {
-      reply += client.botVars.commands[command].function(arguments, message)
+      let command = reply += client.botVars.commands[command]
+      if (command.async) {
+        await command.function(arguments, message);
+      }
+      else {
+        command.function(arguments,message);
+      }
     }
     else {
       reply += "commande inconnue ..."
