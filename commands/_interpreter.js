@@ -35,6 +35,9 @@ module.exports = function (message) {
     message.reply(reply);
   }
   else if (message.content.match(/OUI OU MERDE/)) { // outil décisionnel
-    message.reply(["OUI","MERDE","ZBRADARALDJAN"][Math.floor(Math.random() * 3)]);
+    message.reply(["OUI","OUI","OUI",
+      "MERDE","MERDE","MERDE",
+      "ZBRADARALDJAN"]
+      [Math.floor(Math.random() * 7)]);
   };
 };
