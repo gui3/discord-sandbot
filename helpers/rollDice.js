@@ -1,5 +1,5 @@
-module.exports = (string) => {
-  var [dices, faces] = string.split("d").map(x => parseInt(x)),
+module.exports = (diceString) => {
+  var [dices, faces] = diceString.split("d").map(x => parseInt(x)),
     results = {
       dices: [],
       sum:0
