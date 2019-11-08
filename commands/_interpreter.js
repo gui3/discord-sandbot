@@ -1,5 +1,5 @@
-const sos = require("sos");
-const roll = require("roll");
+const sos = require("./sos");
+const roll = require("./roll");
 
 module.exports = function (message) {
 
