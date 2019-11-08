@@ -7,7 +7,17 @@ client.botVars = {}
 
 // READY -------------------------------------
 function botReboot(guild) {
-
+  function getFirstChan () {
+    return guild.channels.array().sort((a,b)=>a.createdAt-b.createdAt))
+  };
+  guild.guildVars = {
+    prefix: "!",
+    mainChan: getFirstChan(),
+    getFirstChan: getFirstChan,
+  };
+  guild.channels.forEach(chan => {
+    chan.send("Bonjour ! on vient de me rebooter !");
+  });
 }
 
 client.on("ready", c => {
@@ -30,7 +40,7 @@ client.botVars.commands = {};
 fs.readdir("./commands", (err, files) => {
   files.forEach( file => {
     try {
-      var command = require("./command/"+file.replace(/.js$/,""));
+      let command = require("./commands/"+file.replace(/.js$/,""));
       if (!(command.name && typeof command.function == "function" )) {
         throw new Error("could not load command file " + file)
       }
