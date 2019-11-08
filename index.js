@@ -5,7 +5,7 @@ require('dotenv').config();
 const client = new Discord.Client();
 
 // READY -------------------------------------
-client.on("ready", client => {
+client.on("ready", c => {
   console.log(`Logged in !`);
   client.guilds.forEach(guild => {
     console.log('Connected to guild : ' + guild.name);
