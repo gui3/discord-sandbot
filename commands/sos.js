@@ -5,6 +5,7 @@ module.exports = function (message, arguments) {
   var results = [];
   var ignored = [];
   var critical = [];
+  
   arguments.forEach((arg, ix) => {
     var stat = parseInt(arg);
     if (!(stat>0)) {
@@ -44,7 +45,7 @@ module.exports = function (message, arguments) {
     }
   });
 
-  var reply = "resultat du fight : "+sum+"\n";
+  var reply = "\n";
   var sum = 0;
 
   results.forEach(res => {
@@ -58,15 +59,16 @@ module.exports = function (message, arguments) {
       reply += c.type + ":" + c.result + " ";
       sum += c.result;
     });
-    reply +="\n";
   }
 
   if (ignored.length > 0) {
-    reply += "\nignored arguments :";
+    reply += "\n(ignored arguments :";
     ignored.forEach(ign => {
       reply += " " + ign;
     })
+    reply += ")"
   }
+  reply += "resultat du fight : "+sum
 
   message.reply(reply);
 
