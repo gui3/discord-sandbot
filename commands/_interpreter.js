@@ -1,5 +1,6 @@
-const sos = require("./sos");
 const roll = require("./roll");
+const sos = require("./sos");
+const mar = require("./mar");
 
 module.exports = function (message) {
 
@@ -8,7 +9,6 @@ module.exports = function (message) {
     var arguments = message.content.slice(1).split(/ +/);
     var command = arguments.shift();
 
-
     switch (command) {
       case "ping": //-----------------
         message.reply('Pong!');
@@ -16,6 +16,10 @@ module.exports = function (message) {
 
       case "sos": //-----------------
         sos(message, arguments);
+        break;
+
+      case "mar": //-----------------
+        mar(message, arguments);
         break;
 
       case "roll": //-----------------

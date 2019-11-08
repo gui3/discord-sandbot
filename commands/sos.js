@@ -48,11 +48,11 @@ module.exports = function (message, arguments) {
     }
   });
 
-  var reply = "\n";
+  var reply = "COMBAT en mode ENCERCLE ___\n";
   var sum = 0;
 
   results.forEach(res => {
-    reply += res.stat+" dé:"+res.dice +
+    reply += res.stat+" d100: "+res.dice +
       " " + res.modif + " = "+res.result+"\n";
     sum += res.result;
   });
@@ -60,7 +60,7 @@ module.exports = function (message, arguments) {
   if (critical.length > 0) {
     reply += "\nCritiques :"
     critical.forEach(c => {
-      reply += "\n" + c.type + ":" + c.result + " ";
+      reply += "\n" + c.type + " : " + c.result + " ";
       sum += c.result;
     });
   }
