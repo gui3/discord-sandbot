@@ -120,7 +120,7 @@ module.exports = {
         }
         const url = `https://www.youtube.com/watch?v=${video.raw.id}`;
         const title = video.title;
-        let duration = this.formatDuration(video.duration);
+        let duration = formatDuration(video.duration);
         const thumbnail = video.thumbnails.high.url;
         if (duration == '00:00') duration = 'Live Stream';
         const song = {
