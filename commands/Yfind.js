@@ -6,12 +6,14 @@ const ytdl = require('ytdl-core');
 const youtube = new Youtube(process.env.API_YOUTUBE);
 
 module.exports = {
-  name: "YTfind",
-  help: "Cherche la musique indiquee sur youtube\n"+
+  name: "Yfind",
+  help: "Cherche les mots indiques sur youtube\n"+
     "et affiche la video",
   async: true,
   function: async function (arguments, message) {
 
+    var query = arguments.join(" ");
+    
     try {
       const videos = await youtube.searchVideos(query, 1);
       if (videos.length < 1) {
@@ -30,7 +32,7 @@ module.exports = {
       const url = `https://www.youtube.com/watch?v=${video.raw.id}`;
 
       return url;
-      
+
     } catch (err) {
       console.error(err);
       return 'Something went wrong, please try again later';
