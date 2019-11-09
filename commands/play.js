@@ -48,16 +48,16 @@ module.exports = {
               // the following line is essential to other commands like skip
               voiceChannel.songDispatcher = dispatcher;
               //return queue.shift(); //  dequeue the song
-              message.say("On joue : "+song.title);
+              message.reply("On joue : "+song.title);
             })
             .on('finish', () => { // this event fires when the song has ended
               voiceChannel.currentlyPlaying = false;
               voiceChannel.leave(); // leave the voice channel
-              message.say("Song is over!")
+              message.reply("Song is over!")
               return
             })
             .on('error', e => {
-              //message.say('Cannot play song');
+              message.reply('Cannot play song');
               console.error(e);
               voiceChannel.leave();
               return "error"
@@ -66,7 +66,7 @@ module.exports = {
         .catch(e => {
           console.error(e);
           voiceChannel.leave();
-          message.say("Internal error, check logs")
+          message.reply("Internal error, check logs")
           return "error"
         });
     }
@@ -131,7 +131,7 @@ module.exports = {
           voiceChannel
         };
 
-        console.log(song)
+        //console.log(song)
 
         voiceChannel.currentlyPlaying = song;
         return playSong(song, voiceChannel, message);
