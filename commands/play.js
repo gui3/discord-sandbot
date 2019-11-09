@@ -53,11 +53,11 @@ module.exports = {
             .on('finish', () => { // this event fires when the song has ended
               voiceChannel.currentlyPlaying = false;
               voiceChannel.leave(); // leave the voice channel
-              message.reply("Song is over!")
+              message.say("Song is over!")
               return
             })
             .on('error', e => {
-              message.say('Cannot play song');
+              //message.say('Cannot play song');
               console.error(e);
               voiceChannel.leave();
               return "error"
@@ -92,7 +92,7 @@ module.exports = {
           voiceChannel
         };
         voiceChannel.currentlyPlaying = song;
-        playSong(song, voiceChannel, message);
+        return playSong(song, voiceChannel, message);
 
       } catch (err) {
         console.error(err);
@@ -131,12 +131,14 @@ module.exports = {
           voiceChannel
         };
 
+        console.log(song)
+
         voiceChannel.currentlyPlaying = song;
-        playSong(song, voiceChannel, message);
+        return playSong(song, voiceChannel, message);
 
       } catch (err) {
-      console.error(err);
-      return 'Something went wrong, please try again later';
+        console.error(err);
+        return 'Something went wrong, please try again later';
       }
     }
 
