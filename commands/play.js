@@ -48,7 +48,7 @@ module.exports = {
               // the following line is essential to other commands like skip
               voiceChannel.songDispatcher = dispatcher;
               //return queue.shift(); //  dequeue the song
-              return "On joue : "+song.title;
+              message.say("On joue : "+song.title);
             })
             .on('finish', () => { // this event fires when the song has ended
               voiceChannel.currentlyPlaying = false;
