@@ -28,9 +28,9 @@ module.exports = {
       results.forEach(r => {
         reply += "\n" + r.string +" : "+r.dices
       })
-      reply += "\nCalcul intermédiaire : "+calcString;
+      reply += "\nCalcul intermédiaire : "+calcString + "\n";
     }
-    reply += "\nResultat : "+ result;
+    reply += "Resultat : "+ result;
 
     return reply;
   }
