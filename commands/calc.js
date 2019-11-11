@@ -24,7 +24,7 @@ module.exports = {
     }
     var reply = "Resultats des dés :";
     results.forEach(r => {
-      reply += "\n" + r.diceString +" : "+r.dices
+      reply += "\n" + r.string +" : "+r.dices
     })
     reply += "\nCalcul intermédiaire : "+calcString;
     reply += "\nResultat : "+ result;
