@@ -11,10 +11,11 @@ module.exports = {
     if (argument.match(/^(\d+d\d+)$/)) {
       var results = rollDice(argument);
 
-      var reply = "rolled "+argument
-      reply += "\nresult(s) : " + String(results.dices);
+      var reply = "tirage "+argument
+      reply += "\nrésultat : " + String(results.dices);
       if (results.dices.length > 1) {
-        reply += "\nsum : "+results.sum;
+        reply += "\ntotal : "+results.sum;
+        reply += " ; moyenne : "+results.mean;
       }
 
       return reply
