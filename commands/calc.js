@@ -22,8 +22,9 @@ module.exports = {
     else {
       result = eval(calcString);
     }
+    var reply = "";
     if (results.length > 0) {
-      var reply = "Resultats des dés :";
+      reply += "Resultats des dés :";
       results.forEach(r => {
         reply += "\n" + r.string +" : "+r.dices
       })
