@@ -16,7 +16,7 @@ module.exports = {
       calcString = calcString.replace(dice, diceResult.sum);
     }
     var result;
-    if (!calcString.match(/^[ \d+-/*\(\)]+$/)) {
+    if (!calcString.match(/^[ \d\.+-/*\(\)]+$/)) {
       return "Calcul invalide, essayerai tu de me hacker ?";
     }
     else {
