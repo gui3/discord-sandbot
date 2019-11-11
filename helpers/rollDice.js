@@ -1,6 +1,7 @@
 module.exports = (diceString, precision=1) => {
-  var [dices, faces] = diceString.split("d").map(x => parseInt(x)),
-    results = {
+  var [dices, faces] = diceString.split("d").map(x => parseInt(x));
+  var results = {
+      string: diceString,
       dices: [],
       sum:0,
       mean:0
