@@ -10,10 +10,10 @@ module.exports = {
     var calcString = argumentString;
     var diceRex = /\d+d\d+/;
     while (calcString.match(diceRex)) {
-      var dice = argumentString.match(diceRex)[0];
+      var dice = calcString.match(diceRex)[0];
       var diceResult = rollDice(dice);
-      results.push(diceResult)
-      calcString= calcString.replace(dice, diceResult.sum);
+      results.push(diceResult);
+      calcString = calcString.replace(dice, diceResult.sum);
     }
     var result;
     if (!calcString.match(/^[ \d+-/*\(\)]+$/)) {
