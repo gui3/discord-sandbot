@@ -1,7 +1,4 @@
-
-
 const Youtube = require('simple-youtube-api');
-const ytdl = require('ytdl-core');
 
 const youtube = new Youtube(process.env.API_YOUTUBE);
 
@@ -13,7 +10,7 @@ module.exports = {
   function: async function (arguments, message) {
 
     var query = arguments.join(" ");
-    
+
     try {
       const videos = await youtube.searchVideos(query, 1);
       if (videos.length < 1) {
