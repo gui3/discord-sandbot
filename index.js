@@ -76,7 +76,7 @@ client.on("message", async message => {
       reply += "commande inconnue ..."
     }
 
-    message.delete();
+    message.delete().catch(err=>{console.log(err)});
     message.reply(reply);
   }
 
