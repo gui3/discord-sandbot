@@ -73,7 +73,8 @@ client.on("message", async message => {
           reply += c.function(arguments,message);
         }
       } catch (err) {
-        message.reply("erreur : "+err.message)
+        message.reply("erreur : "+err.message)*
+        cosole.log(err)
       }
     }
     else {

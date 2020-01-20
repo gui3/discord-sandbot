@@ -10,6 +10,7 @@ module.exports = {
   async: true,
   function: async function (arguments, message) {
     //check if voice channel
+    message.reply("... je cherche la musique")
     var voiceChannel = message.member.voiceChannel;
     if (!voiceChannel) return 'Il faut être connecté à un salon vocal !';
 
@@ -29,6 +30,7 @@ module.exports = {
     };
 
     function playSong (song, voiceChannel, message) {
+      message.reply("... je tente de jouer la musique")
       voiceChannel
         .join() // join the user's voice channel
         .then(connection => {
@@ -49,6 +51,7 @@ module.exports = {
               voiceChannel.songDispatcher = dispatcher;
               //return queue.shift(); //  dequeue the song
               message.reply("On joue : "+song.title);
+              return
             })
             .on('finish', () => { // this event fires when the song has ended
               voiceChannel.currentlyPlaying = false;
@@ -56,18 +59,20 @@ module.exports = {
               message.reply("Song is over!")
               return
             })
-            .on('error', e => {
-              message.reply('Cannot play song');
-              console.error(e);
+            .on('error', err => {
+              message.reply('Cannot play song : ' + err.message);
+              console.error(err);
               voiceChannel.leave();
-              return "error"
+              //return "error"
+              return
             });
         })
-        .catch(e => {
-          console.error(e);
+        .catch(err => {
+          message.reply("ERREUR : " + err.message)
+          console.error(err);
           voiceChannel.leave();
-          message.reply("Internal error, check logs")
-          return "error"
+          //return "error"
+          return
         });
     }
 
@@ -75,6 +80,7 @@ module.exports = {
     if (query.match(/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/)) {
       const url = query; // temp variable
       try {
+        message.reply("...je cherche la video")
         query = query
           .replace(/(>|<)/gi, '')
           .split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
@@ -91,11 +97,13 @@ module.exports = {
           thumbnail,
           voiceChannel
         };
+        message.reply("j'ai trouvé la video : "+song.title)
         voiceChannel.currentlyPlaying = song;
         return playSong(song, voiceChannel, message);
 
       } catch (err) {
         console.error(err);
+        message.reply("erreur : " + err.message)
         return 'Something went wrong, please try again later';
       }
     }
@@ -104,15 +112,18 @@ module.exports = {
 
     else {
       try {
+        message.reply("...je cherche la video")
         const videos = await youtube.searchVideos(query, 1);
         if (videos.length < 1) {
           return "I had some trouble finding what you were looking for,"+
           " please try again or be more specific";
         }
+        message.reply("...j'ai trouvé une video : " + videos[0])
         try {
           // get video data from the API
           var video = await youtube.getVideoByID(videos[0].id);
         } catch (err) {
+          message.reply("ERREUR : " + err.message)
           console.error(err);
           return
             'An error has occured when trying to get the video ID from youtube'
@@ -130,6 +141,7 @@ module.exports = {
           thumbnail,
           voiceChannel
         };
+        message.reply("...j'ai bien récupéré la video : " + song.title)
 
         //console.log(song)
 
@@ -137,6 +149,7 @@ module.exports = {
         return playSong(song, voiceChannel, message);
 
       } catch (err) {
+        message.reply("ERREUR : " + err.message)
         console.error(err);
         return 'Something went wrong, please try again later';
       }
