@@ -34,7 +34,7 @@ module.exports = {
       voiceChannel
         .join() // join the user's voice channel
         .then(connection => {
-          const streamOptions = { seek: 0, volume: 0.2 };
+          const streamOptions = { seek: 0, volume: 1 };
           const dispatcher = connection
             .playStream(
               ytdl(song.url, { // pass the url to .ytdl()
@@ -42,7 +42,7 @@ module.exports = {
                 filter: 'audioonly',
                 // download part of the song before playing it
                 // helps reduces stuttering
-                //highWaterMark: 1024 * 1024 * 10
+                highWaterMark: 1024 * 1024 * 10
               }),
               streamOptions
             )
@@ -153,7 +153,7 @@ module.exports = {
       } catch (err) {
         message.reply("ERREUR : " + err.message)
         console.error(err);
-        return 'Something went wrong, please try again later';
+        return;
       }
     }
 
