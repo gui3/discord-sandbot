@@ -34,7 +34,7 @@ module.exports = {
       voiceChannel
         .join() // join the user's voice channel
         .then(connection => {
-          const streamOptions = { seek: 0, volume: 1 };
+          const streamOptions = { seek: 0, volume: 0.3 };
           const dispatcher = connection
             .playStream(
               ytdl(song.url, { // pass the url to .ytdl()
