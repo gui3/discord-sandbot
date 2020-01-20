@@ -65,15 +65,15 @@ client.on("message", async message => {
 
     if (client.botVars.commands[command]) {
       let c = client.botVars.commands[command]
-      if (c.async) {
-        reply += await c.function(arguments, message);
-      }
-      else {
-        try {
-          reply += c.function(arguments,message);
-        } catch (err) {
-          message.reply("erreur : "+err.message)
+      try {
+        if (c.async) {
+          reply += await c.function(arguments, message);
         }
+        else {
+          reply += c.function(arguments,message);
+        }
+      } catch (err) {
+        message.reply("erreur : "+err.message)
       }
     }
     else {
