@@ -67,7 +67,7 @@ client.on("message", async message => {
       let c = client.botVars.commands[command]
       try {
         if (c.async) {
-          await c.function(arguments, message);
+          reply += await c.function(arguments, message);
         }
         else {
           reply += c.function(arguments,message);

@@ -52,21 +52,21 @@ module.exports = {
               voiceChannel.songDispatcher = dispatcher;
               //return queue.shift(); //  dequeue the song
               message.reply("On joue : "+song.title);
-              return
+              return ""
             })
             .on('finish', () => { // this event fires when the song has ended
               message.reply("...finish")
               voiceChannel.currentlyPlaying = false;
               voiceChannel.leave(); // leave the voice channel
               message.reply("Song is over!")
-              return
+              return ""
             })
             .on('error', err => {
               message.reply('ERREUR : ' + err.message);
               console.error(err);
               voiceChannel.leave();
               //return "error"
-              return
+              return ""
             });
         })
         .catch(err => {
@@ -74,7 +74,7 @@ module.exports = {
           console.error(err);
           voiceChannel.leave();
           //return "error"
-          return
+          return ""
         });
     }
 
@@ -153,7 +153,7 @@ module.exports = {
       } catch (err) {
         message.reply("ERREUR : " + err.message)
         console.error(err);
-        return;
+        return "";
       }
     }
 
