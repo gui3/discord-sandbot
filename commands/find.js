@@ -3,7 +3,7 @@ const Youtube = require('simple-youtube-api');
 const youtube = new Youtube(process.env.API_YOUTUBE);
 
 module.exports = {
-  name: "Yfind",
+  name: "find",
   help: "Cherche les mots indiques sur youtube\n"+
     "et affiche la video",
   async: true,
