@@ -42,11 +42,12 @@ module.exports = {
                 filter: 'audioonly',
                 // download part of the song before playing it
                 // helps reduces stuttering
-                highWaterMark: 1024 * 1024 * 10
+                //highWaterMark: 1024 * 1024 * 10
               }),
               streamOptions
             )
             .on('start', () => {
+              message.reply("...start")
               // the following line is essential to other commands like skip
               voiceChannel.songDispatcher = dispatcher;
               //return queue.shift(); //  dequeue the song
@@ -54,13 +55,14 @@ module.exports = {
               return
             })
             .on('finish', () => { // this event fires when the song has ended
+              message.reply("...finish")
               voiceChannel.currentlyPlaying = false;
               voiceChannel.leave(); // leave the voice channel
               message.reply("Song is over!")
               return
             })
             .on('error', err => {
-              message.reply('Cannot play song : ' + err.message);
+              message.reply('ERREUR : ' + err.message);
               console.error(err);
               voiceChannel.leave();
               //return "error"
