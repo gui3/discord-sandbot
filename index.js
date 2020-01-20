@@ -69,15 +69,23 @@ client.on("message", async message => {
         reply += await c.function(arguments, message);
       }
       else {
-        reply += c.function(arguments,message);
+        try {
+          reply += c.function(arguments,message);
+        } catch (err) {
+          message.reply("erreur : "+err.message)
+        }
       }
     }
     else {
       reply += "commande inconnue ..."
     }
 
-    message.delete().catch(err=>{console.log(err)});
-    message.reply(reply);
+    message.delete().catch(err=>{
+      message.reply("*j'ai pas la permission de supprimer des messages*")
+    });
+    if (reply) {
+      message.reply(reply);
+    }
   }
 
   else if (message.content.match(/OUI OU MERDE/i)) { // outil décisionnel
