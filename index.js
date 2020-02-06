@@ -62,13 +62,14 @@ client.on("message", async message => {
     var command = arguments.shift();
 
     message.reply(
-      "COMMAND ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+      "lance une commande =============================\n"
       + message.content + "\n\n"
     )
 
+    let result;
+
     if (client.botVars.commands[command]) {
       let c = client.botVars.commands[command]
-      let result;
       try {
         if (c.async) {
           result = await c.function(arguments, message);
@@ -92,6 +93,7 @@ client.on("message", async message => {
       message.reply(
         "resultat de " +
         message.content +
+        " :\n" +
         result
       );
     }
