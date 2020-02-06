@@ -1,15 +1,13 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 
-module.exports = async (message) => {
+module.exports = async (message, debug) => {
   const fullLink = "https://docs.google.com/spreadsheets/d/1Bny-ZsCG_oUuS0nTbR-7tBBZu47_ncS9qGYaMpuprWU/edit#gid=0"
   const sheetId = "1Bny-ZsCG_oUuS0nTbR-7tBBZu47_ncS9qGYaMpuprWU"
 
   var loaded = {}
 
-  if (message) {
-    message.reply("je me connecte à Google Sheets...")
-  }
+  debug.say("je me connecte à Google Sheets...")
 
   const doc = new GoogleSpreadsheet(sheetId);
 
@@ -23,9 +21,7 @@ module.exports = async (message) => {
   loaded.docTitle = doc.title;
   loaded.sheets = {};
 
-  if (message) {
-    message.reply("...connection réussie, je récupère les infos...")
-  }
+  debug.say("...connection réussie, je récupère les infos...")
 
   // get the spreadsheets
   for (let s = 0; s < doc.sheetCount; ++s ) {
@@ -36,9 +32,7 @@ module.exports = async (message) => {
 
     await sheet.loadCells();
 
-    if (message) {
-      message.reply("...cellules chargées")
-    }
+    debug.say("...cellules chargées")
 
     let nullrow = 0;
     for (let row= 0; row < sheet.rowCount; ++row) {
@@ -65,9 +59,7 @@ module.exports = async (message) => {
       }
     }
 
-    if (message) {
-      message.reply("feuille " + sheet.title + " bien chargée !")
-    }
+    debug.say("feuille " + sheet.title + " bien chargée !")
   }
 
   return loaded;

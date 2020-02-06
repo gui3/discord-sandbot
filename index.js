@@ -53,7 +53,10 @@ fs.readdir("./commands", (err, files) => {
   })
 })
 
+const Debugger = require("./helpers/Debugger")
+
 client.on("message", message => {
+
 
   if (message.content.startsWith(message.guild.guildVars.prefix)) {
     //you talking to the bot
@@ -61,10 +64,17 @@ client.on("message", message => {
       .slice(message.guild.guildVars.prefix.length).split(/[ \r\n]+/);
     var command = arguments.shift();
 
+    const debug = new Debugger(message);
+    debug.silent = !arguments.includes("debug")
+
+    if (arguments.includes("debug")) {
+      arguments.pop(arguments.indexOf("debug"))
+    };
+
     message.reply(
-      "lance une commande ===================================\n"
-      + message.content + "\n" +
-      "------------------------------------------------------\n"
+      "lance une commande ==========================\n"
+      + message.content +
+      (debug.silent ? "\n" : " --DEBUG MODE activé\n")
     )
 
     let result;
@@ -73,21 +83,20 @@ client.on("message", message => {
       let c = client.botVars.commands[command]
       try {
         if (c.async) {
-          c.function(arguments, message)
+          c.function(arguments, message, debug)
           .then(result => message.reply(
             "Retour de " +
             message.content +
             "---------------------\n" +
             result
           ))
-          .catch(err => message.reply("ERREUR : " + err.message));
+          .catch(err => debug.say("ERREUR : " + err.message));
         }
         else {
-          result = c.function(arguments,message);
+          result = c.function(arguments,message, debug);
         }
       } catch (err) {
-        message.reply("ERREUR : "+err.message)*
-        cosole.log(err)
+        debug.say("ERREUR : "+err.message)
       }
     }
     else {
@@ -95,7 +104,7 @@ client.on("message", message => {
     }
 
     message.delete().catch(err=>{
-      message.reply("*j'ai pas la permission de supprimer des messages*")
+      debug.say("*j'ai pas la permission de supprimer des messages*")
     });
     if (result) {
       message.reply(result);

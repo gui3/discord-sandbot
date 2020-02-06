@@ -8,7 +8,7 @@ module.exports = {
   help: "Cherche la musique indiquee sur youtube\n"+
     "et la lance dans le chan vocal ou vous êtes",
   async: true,
-  function: async function (arguments, message) {
+  function: async function (arguments, message, debug) {
     //check if voice channel
     message.reply("... je cherche la musique")
     var voiceChannel = message.member.voiceChannel;
@@ -30,7 +30,7 @@ module.exports = {
     };
 
     function playSong (song, voiceChannel, message) {
-      message.reply("... je tente de jouer la musique")
+      debug.say("... je tente de jouer la musique")
       voiceChannel
         .join() // join the user's voice channel
         .then(connection => {
@@ -47,7 +47,7 @@ module.exports = {
               streamOptions
             )
             .on('start', () => {
-              message.reply("...start")
+              debug.say("...start")
               // the following line is essential to other commands like skip
               voiceChannel.songDispatcher = dispatcher;
               //return queue.shift(); //  dequeue the song
@@ -55,14 +55,14 @@ module.exports = {
               return ""
             })
             .on('finish', () => { // this event fires when the song has ended
-              message.reply("...finish")
+              debug.say("...finish")
               voiceChannel.currentlyPlaying = false;
               voiceChannel.leave(); // leave the voice channel
               message.reply("Song is over!")
               return ""
             })
             .on('error', err => {
-              message.reply('ERREUR : ' + err.message);
+              debug.error('ERREUR : ' + err.message);
               console.error(err);
               voiceChannel.leave();
               //return "error"
@@ -70,7 +70,7 @@ module.exports = {
             });
         })
         .catch(err => {
-          message.reply("ERREUR : " + err.message)
+          debug.error("ERREUR : " + err.message)
           console.error(err);
           voiceChannel.leave();
           //return "error"
@@ -99,13 +99,13 @@ module.exports = {
           thumbnail,
           voiceChannel
         };
-        message.reply("j'ai trouvé la video : "+song.title)
+        debug.say("j'ai trouvé la video : "+song.title)
         voiceChannel.currentlyPlaying = song;
         return playSong(song, voiceChannel, message);
 
       } catch (err) {
         console.error(err);
-        message.reply("erreur : " + err.message)
+        debug.error("erreur : " + err.message)
         return 'Something went wrong, please try again later';
       }
     }
@@ -120,12 +120,12 @@ module.exports = {
           return "I had some trouble finding what you were looking for,"+
           " please try again or be more specific";
         }
-        message.reply("...j'ai trouvé une video : " + videos[0])
+        debug.say("...j'ai trouvé une video : " + videos[0])
         try {
           // get video data from the API
           var video = await youtube.getVideoByID(videos[0].id);
         } catch (err) {
-          message.reply("ERREUR : " + err.message)
+          debug.error("ERREUR : " + err.message)
           console.error(err);
           return
             'An error has occured when trying to get the video ID from youtube'
@@ -151,7 +151,7 @@ module.exports = {
         return playSong(song, voiceChannel, message);
 
       } catch (err) {
-        message.reply("ERREUR : " + err.message)
+        debug.error("ERREUR : " + err.message)
         console.error(err);
         return "";
       }

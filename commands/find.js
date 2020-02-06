@@ -31,7 +31,7 @@ module.exports = {
       return url;
 
     } catch (err) {
-      console.error(err);
+      debug.error(err);
       return 'Something went wrong, please try again later';
     }
   }
