@@ -2,7 +2,7 @@ const loadMemo = require("../helpers/loadMemo");
 
 module.exports = {
   name: "memo",
-  help: "Donne les informations sur les armes et objets\n"
+  help: "Donne les informations sur les armes et objets\n",
   function: (arguments, message) => {
     loadMemo(message)
     .then(data => {
