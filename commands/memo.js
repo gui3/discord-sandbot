@@ -5,8 +5,9 @@ module.exports = {
   help: "Donne les informations sur les armes et objets\n",
   function: (arguments, message) => {
     loadMemo(message)
-    .then(data => {
+    .then(memo => {
       message.reply(data);
+      console.log(memo)
     })
     .catch(err => {
       message.reply("ERREUR : " + err.message)

@@ -61,16 +61,20 @@ client.on("message", async message => {
       .slice(message.guild.guildVars.prefix.length).split(/[ \r\n]+/);
     var command = arguments.shift();
 
-    var reply = "command " + message.content + " :\n"
+    message.reply(
+      "COMMAND ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+      + message.content + "\n\n"
+    )
 
     if (client.botVars.commands[command]) {
       let c = client.botVars.commands[command]
+      let result;
       try {
         if (c.async) {
-          reply += await c.function(arguments, message);
+          result = await c.function(arguments, message);
         }
         else {
-          reply += c.function(arguments,message);
+          result = c.function(arguments,message);
         }
       } catch (err) {
         message.reply("erreur : "+err.message)*
@@ -78,14 +82,18 @@ client.on("message", async message => {
       }
     }
     else {
-      reply += "commande inconnue ..."
+      message.reply("commande inconnue ...")
     }
 
     message.delete().catch(err=>{
       message.reply("*j'ai pas la permission de supprimer des messages*")
     });
-    if (reply) {
-      message.reply(reply);
+    if (result) {
+      message.reply(
+        "resultat de " +
+        message.content +
+        result
+      );
     }
   }
 
