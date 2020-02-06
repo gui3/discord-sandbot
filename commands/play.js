@@ -1,7 +1,7 @@
 const Youtube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 
-const youtube = new Youtube(process.env.API_YOUTUBE);
+const youtube = new Youtube(process.env.GOOGLE_API_KEY);
 
 module.exports = {
   name: "play",
