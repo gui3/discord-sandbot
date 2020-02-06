@@ -7,11 +7,11 @@ module.exports = {
     loadMemo(message)
     .then(memo => { // processing the memo -------------
 
-      for (let sheet of Object.keys(memo.sheets) {
+      for (let sheet of Object.keys(memo.sheets)) {
         message.reply(memo.sheets[sheet].data)
       }
-      console.log(memo)
-      
+      console.log(memo);
+
     })// ------------------------------------------------
     .catch(err => {
       message.reply("ERREUR : " + err.message)
