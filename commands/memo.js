@@ -5,10 +5,14 @@ module.exports = {
   help: "Donne les informations sur les armes et objets\n",
   function: (arguments, message) => {
     loadMemo(message)
-    .then(memo => {
-      message.reply(memo);
+    .then(memo => { // processing the memo -------------
+
+      for (let sheet of Object.keys(memo.sheets) {
+        message.reply(memo.sheets[sheet].data)
+      }
       console.log(memo)
-    })
+      
+    })// ------------------------------------------------
     .catch(err => {
       message.reply("ERREUR : " + err.message)
     })

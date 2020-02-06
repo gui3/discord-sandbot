@@ -24,10 +24,21 @@ module.exports = async (message) => {
   }
 
   // get the spreadsheets
-  for (var i = 0; i < doc.sheetCount; ++i ) {
-    const sheet = doc.sheetsByIndex[i];
+  for (let s = 0; s < doc.sheetCount; ++s ) {
+    const sheet = doc.sheetsByIndex[s];
     loaded.sheets[sheet.title] = {sheetReference:sheet};
-    
+
+    loaded.sheets[sheet.title].data = []
+
+    for (let row= 0; row < sheet.rowCount; ++row) {
+      loaded.sheets[sheet.title].data.push([])
+
+      for (let col = 0; col < sheet.columnCount; ++col) {
+        let cell = sheet.getCell(row, col).value;
+        loaded.sheets[sheet.title].data[row].push(cell)
+      }
+    }
+
     if (message) {
       message.reply("feuille " + sheet.title + " bien chargée !")
     }
