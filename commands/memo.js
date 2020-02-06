@@ -6,7 +6,7 @@ module.exports = {
   function: (arguments, message) => {
     loadMemo(message)
     .then(memo => {
-      message.reply(data);
+      message.reply(memo);
       console.log(memo)
     })
     .catch(err => {
