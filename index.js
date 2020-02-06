@@ -53,7 +53,7 @@ fs.readdir("./commands", (err, files) => {
   })
 })
 
-client.on("message", async message => {
+client.on("message", message => {
 
   if (message.content.startsWith(message.guild.guildVars.prefix)) {
     //you talking to the bot
@@ -62,8 +62,9 @@ client.on("message", async message => {
     var command = arguments.shift();
 
     message.reply(
-      "lance une commande =============================\n"
-      + message.content + "\n\n"
+      "lance une commande ===================================\n"
+      + message.content + "\n" +
+      "------------------------------------------------------\n"
     )
 
     let result;
@@ -72,13 +73,20 @@ client.on("message", async message => {
       let c = client.botVars.commands[command]
       try {
         if (c.async) {
-          result = await c.function(arguments, message);
+          c.function(arguments, message)
+          .then(result => message.reply(
+            "Retour de " +
+            message.content +
+            "---------------------\n" +
+            result
+          ))
+          .catch(err => message.reply("ERREUR : " + err.message));
         }
         else {
           result = c.function(arguments,message);
         }
       } catch (err) {
-        message.reply("erreur : "+err.message)*
+        message.reply("ERREUR : "+err.message)*
         cosole.log(err)
       }
     }
@@ -90,12 +98,7 @@ client.on("message", async message => {
       message.reply("*j'ai pas la permission de supprimer des messages*")
     });
     if (result) {
-      message.reply(
-        "resultat de " +
-        message.content +
-        " :\n" +
-        result
-      );
+      message.reply(result);
     }
   }
 

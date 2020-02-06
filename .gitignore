@@ -1,4 +1,7 @@
+
+discord-sandbot-key.json
 .env
+
 _draft/*
 node_modules/*
 events/*

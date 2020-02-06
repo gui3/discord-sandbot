@@ -9,6 +9,9 @@ module.exports = {
 
       for (let sheet of Object.keys(memo.sheets)) {
         message.reply(memo.sheets[sheet].data)
+        .catch(
+          err => console.log("ERREUR : "+err.message)
+        );
       }
       console.log(memo);
 

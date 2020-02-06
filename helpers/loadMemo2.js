@@ -1,4 +1,4 @@
-const { GoogleSpreadsheet } = require('google-spreadsheet');
+var GoogleSheets = require('google-drive-sheets');
 
 
 module.exports = async (message) => {
@@ -11,15 +11,10 @@ module.exports = async (message) => {
     message.reply("je me connecte à Google Sheets...")
   }
 
-  const doc = new GoogleSpreadsheet(sheetId);
+  const doc = new GoogleSheets(sheetId);
 
-  //doc.useApiKey(process.env.GOOGLE_API_KEY);
-  await doc.useServiceAccountAuth({
-    client_email: process.env.GOOGLE_BOT_EMAIL,
-    private_key: process.env.GOOGLE_BOT_PRIVATE_KEY.replace(/\\n/g, '\n'),
-  });
 
-  await doc.loadInfo();
+  await doc.getInfo();
   loaded.docTitle = doc.title;
   loaded.sheets = {};
 
@@ -40,28 +35,12 @@ module.exports = async (message) => {
       message.reply("...cellules chargées")
     }
 
-    let nullrow = 0;
     for (let row= 0; row < sheet.rowCount; ++row) {
       loaded.sheets[sheet.title].data.push([])
 
-      let nullcell = 0;
       for (let col = 0; col < sheet.columnCount; ++col) {
         let cell = sheet.getCell(row, col).value;
         loaded.sheets[sheet.title].data[row].push(cell)
-        if (!cell) {
-          ++nullcell;
-        } else {
-          nullcell = 0;
-        }
-        if (nullcell > 10) {
-          break;
-        }
-      }
-      if (nullcell == loaded.sheets[sheet.title].data[row].length) {
-        ++nullrow
-      }
-      if (nullrow > 5) {
-        break;
       }
     }
 
