@@ -2,6 +2,8 @@ const Discord = require('discord.js');
 const fs = require("fs");
 require('dotenv').config();
 
+// commentaire
+
 const client = new Discord.Client();
 client.botVars = {}
 
