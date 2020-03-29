@@ -20,28 +20,29 @@ module.exports = async (message, debug) => {
   await doc.loadInfo();
   loaded.docTitle = doc.title;
   loaded.sheets = {};
+  loaded.data = {};
 
   debug.say("...connection réussie, je récupère les infos...")
 
   // get the spreadsheets
   for (let s = 0; s < doc.sheetCount; ++s ) {
     const sheet = doc.sheetsByIndex[s];
-    loaded.sheets[sheet.title] = {sheetReference:sheet};
 
-    loaded.sheets[sheet.title].data = []
+    loaded.data[sheet.title] = {};
+    loaded.data[sheet.title]["_RAW"] = []
 
     await sheet.loadCells();
 
-    debug.say("...cellules chargées")
+    debug.say("...cellules chargées depuis " + sheet.title)
 
     let nullrow = 0;
     for (let row= 0; row < sheet.rowCount; ++row) {
-      loaded.sheets[sheet.title].data.push([])
+      loaded.data[sheet.title]["RAW"].push([]);
 
       let nullcell = 0;
       for (let col = 0; col < sheet.columnCount; ++col) {
         let cell = sheet.getCell(row, col).value;
-        loaded.sheets[sheet.title].data[row].push(cell)
+        loaded.data[sheet.title]["RAW"][row].push(cell)
         if (!cell) {
           ++nullcell;
         } else {
