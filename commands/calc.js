@@ -17,7 +17,7 @@ module.exports = {
     }
     var result;
     if (!calcString.match(/^[ \d\.+-/*\(\)]+$/)) {
-      return "Calcul invalide, essayerai tu de me hacker ?";
+      return "Calcul invalide, essayerais tu de me hacker ?";
     }
     else {
       result = eval(calcString);

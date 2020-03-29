@@ -7,7 +7,7 @@ module.exports = {
     // message est la référence envers le message discord qui a lancé la commande
     //   tu peux faire message.reply pour répondre au message et poster un texte
 
-    message.reply("j'ai bien compris")
+    message.reply("j'ai bien compris ma version")
     message.reply("vous avez dit : " + arguments.join(" "))
     // Array.join 'colle' tous les éléments d'un Array avec le texte en argument
   }

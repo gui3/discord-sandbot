@@ -5,8 +5,8 @@ const youtube = new Youtube(process.env.GOOGLE_API_KEY);
 
 module.exports = {
   name: "play",
-  help: "Cherche la musique indiquee sur youtube\n"+
-    "et la lance dans le chan vocal ou vous êtes",
+  help: "Cherche la musique indiquée sur youtube\n"+
+    "et la lance dans le chat vocal ou vous êtes",
   async: true,
   function: async function (arguments, message, debug) {
     //check if voice channel
