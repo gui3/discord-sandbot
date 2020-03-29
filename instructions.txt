@@ -1,0 +1,13 @@
+ouvrir invite de commande
+cd E:
+cd E:\Fichiers\Vrac\Prog\atom1\discord-sandbot
+git pull
+*code*
+node index.js  // le robot se connecte sur Discord
+*test robot en local*
+git add .
+git commit -m "message"
+git push
+ctrl+c dans l'invite de commande pour déco le robot
+*préviens Guillaume*
+
