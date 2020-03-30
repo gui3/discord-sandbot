@@ -1,5 +1,5 @@
 ouvrir invite de commande
-cd E:
+E:
 cd E:\Fichiers\Vrac\Prog\atom1\discord-sandbot
 git pull
 *code*
