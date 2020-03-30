@@ -2,13 +2,9 @@ const rollDice = require("./rollDice");
 
 module.exports = (dist,modif,dd_table) => {
 
-  // préambule
-  // tableau des distances
-  var dist_table = new Array(0, 2, 5,10,15,20,25,30,40,50,60,80, 100);
-  // tableau des degrés de difficulté pour l'arba de chasse
-//  var dd_table   = new Array(5,10,18,26,34,42,50,55,65,75,85,105,125);
-  // tableau des blessures
-  var id_table = new Array(2,2,2,4,4,4,5,5,6,6);
+  // préambule : tableau des valeurs-blessure
+//  var id_table = new Array(2,2,2,4,4,4,5,5,6,6);
+  var id_table = [2,2,2,4,4,4,5,5,6,6];
 
   var reply = "";
 
@@ -41,7 +37,7 @@ module.exports = (dist,modif,dd_table) => {
     var reussite = score_tir - dd;
     reply += " (dépassé de " + reussite + ")\n";
     // division euclidienne pour obtenir le chiffre des dizaines (ne pas dépasser la taille du tableau)
-    var dizaine = Math.min(Math.floor(reussite/10) , 9);
+    var dizaine = Math.min(Math.floor(reussite/10) , id_table.length-1);
     var inddegats = id_table[dizaine]
     reply += "Valeur blessure: " + inddegats + " (blessure ";
     // indication textuelle type de blessure

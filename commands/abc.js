@@ -75,7 +75,7 @@ module.exports = {
         }
       } else {  // distance >100
         reply += "Distance trop grande, situation non prévue\n";
-        return
+        return reply
       }
     }
 
