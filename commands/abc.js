@@ -40,7 +40,7 @@ module.exports = {
         }
         // détermination du dd pour une distance intermédiaire
         if (ind >= 1) {
-          var dd = (dd_table[ind]-dd_table[ind-1])*(dist-dist_table[ind-1])/(dist_table[ind]-dd_table[ind-1])+dd_table[ind-1];
+          var dd = (dd_table[ind]-dd_table[ind-1])*(dist-dist_table[ind-1])/(dist_table[ind]-dist_table[ind-1])+dd_table[ind-1];
           dd = Math.round(dd);
         } else {
           var dd = dd_table[0];
