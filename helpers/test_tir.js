@@ -2,9 +2,14 @@ const rollDice = require("../helpers/rollDice");
 
 // commande tir arbalète de chasse à une distance x avec un modificateur de tir y !abc x y
 
+// pour l'instant, seule la commande !abc est créée
+// il faudrait créer la commande !tir qui marche avec toutes les armes
+// arc court, long, composite, arbalète légère, de chasse, lourde, arquebuse, pistolet, fronde...
+// certaines ont les mêmes degrés de difficulté
+// commande !tir abc x y
+
 module.exports = {
-  name: "abc",
-  help: "Tir à l'arbalète de chasse",
+
   function: function (arguments) {
 
     // préambule : tableau des degrés de difficulté du tir
@@ -38,18 +43,10 @@ module.exports = {
         while (dist > dist_table[ind]) {
           ind++;
         }
-        // détermination du dd pour une distance intermédiaire
-        if (ind >= 1) {
-          var dd = (dd_table[ind]-dd_table[ind-1])*(dist-dist_table[ind-1])/(dist_table[ind]-dd_table[ind-1])+dd_table[ind-1];
-          dd = Math.round(dd);
-        } else {
-          var dd = dd_table[0];
-        }
-//        var dd = dd_table[ind];
-        reply += "Degré de difficulté: " + dd;
+        reply += "Degré de difficulté: " + dd_table[ind];
         // analyse du résultat
-        if (score_tir >= dd) {  // réussite du tir
-          var reussite = score_tir - dd;
+        if (score_tir >= dd_table[ind]) {  // réussite du tir
+          var reussite = score_tir - dd_table[ind];
           reply += " (dépassé de " + reussite + ")\n";
           // division euclidienne pour obtenir le chiffre des dizaines (ne pas dépasser la taille du tableau)
           var dizaine = Math.min(Math.floor(reussite/10) , 9);
