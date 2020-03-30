@@ -10,8 +10,8 @@ module.exports = {
         // lire "arme"
         if (Object.keys(process.externalData.dd_tir).includes(arme)) {
           // extraire le tableau des dd "dd_tabl" en fonction de l'arme
-          let dd_table = process.externalData.dd_tir[arme];
-          let dist_table = process.externalData.dd_tir['_distance'];
+          let dd_table = process.externalData.dd_tir[arme]
+          let dist_table = process.externalData.dd_tir['_distance']
           // faire appel à test_tir
           var reply = test_tir(dist,modif,dd_tabl,dist_table);
         } else {  // arme non reconnue
