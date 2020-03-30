@@ -14,15 +14,28 @@ module.exports = {
     if (parseInt(dist) >= 0 && typeof parseInt(modif) === "number") {
       if (parseInt(dist) <= 100) {
         // lire "arme"
-        if (Object.keys(process.externalData.dd_tir).includes(arme)) {
+        if (
+          Object.keys(process.externalData.dd_tir).includes(arme)
+          && arme !== '_distance'
+        ) {
           // extraire le tableau des dd "dd_tabl" en fonction de l'arme
-          let dd_table = process.externalData.dd_tir[arme]
-          let dist_table = process.externalData.dd_tir['_distance']
+          let dd_table = process.externalData.dd_tir[arme]['dd']
+          let dist_table = process.externalData.dd_tir['_distance']['dd']
           // faire appel à test_tir
           debug.say('je lance le test de tir')
           message.reply(test_tir(dist,modif,dd_table,dist_table))
         } else {  // arme non reconnue
-          message.reply("Erreur: arme non valide\nArmes: ...\n")
+          listing = ''
+          for (let weapon of Object.keys(process.externalData.dd_tir)) {
+            if (weapon !== '_distance') {
+              listing += weapon + " : " +
+                process.externalData.dd_tir[weapon]['name'] +
+                '\n'
+
+            }
+          }
+          message.reply("Erreur: arme non valide\n---Armes disponibles:\n" + listing)
+
         }
       } else {  // distance >100
         message.reply("Distance trop grande, situation non prévue\n")

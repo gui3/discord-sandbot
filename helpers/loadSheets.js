@@ -29,7 +29,10 @@ module.exports = async (message, debug) => {
         for (let i = 0; i < rows.length; i++) {
           let row = rows[i]
           //debug.say('chargement de la ligne ' + i)
-          DICTIONNAIRE.dd_tir[row[0]] = row.slice(1).map(cell => parseFloat(cell))
+          DICTIONNAIRE.dd_tir[row[0]] = {
+            name: row[1],
+            dd: row.slice(2).map(cell => parseFloat(cell))
+          }
         }
         debug.say(JSON.stringify(DICTIONNAIRE))
         process.externalData = DICTIONNAIRE
