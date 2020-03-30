@@ -1,6 +1,6 @@
 const rollDice = require("./rollDice");
 
-module.exports = (dist,modif,dd_table) => {
+module.exports = (dist,modif,dd_table,dist_table) => {
 
   // préambule : tableau des valeurs-blessure
 //  var id_table = new Array(2,2,2,4,4,4,5,5,6,6);

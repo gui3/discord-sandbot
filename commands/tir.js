@@ -8,11 +8,12 @@ module.exports = {
     if (parseInt(dist) >= 0 && typeof parseInt(modif) === "number") {
       if (parseInt(dist) <= 100) {
         // lire "arme"
-        if (Object.keys(DICTIONNAIRE).includes(arme)) {
+        if (Object.keys(process.externalData.dd_tir).includes(arme)) {
           // extraire le tableau des dd "dd_tabl" en fonction de l'arme
-
+          let dd_table = process.externalData.dd_tir[arme];
+          let dist_table = process.externalData.dd_tir['_distance'];
           // faire appel à test_tir
-          var reply = test_tir(dist,modif,dd_tabl).sum;
+          var reply = test_tir(dist,modif,dd_tabl,dist_table);
         } else {  // arme non reconnue
           return "Erreur: arme non valide\nArmes: ...\n"
         }
@@ -20,6 +21,6 @@ module.exports = {
         return "Distance trop grande, situation non prévue\n"
       }
     } else {  // distance ou modificateur non valide
-      return "Commande non valide: (!code_arme distance modificteur)\n  ex: !abc 30 44\n"
+      return "Commande non valide: (!tir code_arme distance modificteur)\n  ex: !tir abc 30 44\n"
   }
 };
