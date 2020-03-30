@@ -5,5 +5,6 @@ discord-sandbot-key.json
 _draft/*
 node_modules/*
 events/*
+package-lock.json
 
 instructions.txt
