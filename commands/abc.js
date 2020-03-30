@@ -21,7 +21,7 @@ module.exports = {
 
     // vérifier que l'on a deux nombres
     if (parseInt(dist) >= 0 && typeof parseInt(modif) === "number") {
-      if (dist <= 100) {
+      if (parseInt(dist) <= 100) {
         // tirage du d100
         var score_de = rollDice("1d100").sum;
         // résultat du test de tir
