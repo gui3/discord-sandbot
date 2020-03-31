@@ -2,7 +2,7 @@ const test_tir = require("../helpers/test_tir");
 
 module.exports = {
   name: "tir",
-  help: "ceci est un test",
+  help: "Test de tir sur cible fixe à la distance x à l'arme indiquée avec modificateur y\n  ex: !tir abc 30 44\n",
   function: function (arguments, message, debug) {
     if (!process.externalData) {
       message.reply("je n'ai pas les données pour le tir,\n"+
@@ -31,11 +31,9 @@ module.exports = {
               listing += weapon + " : " +
                 process.externalData.dd_tir[weapon]['name'] +
                 '\n'
-
             }
           }
-          message.reply("Erreur: arme non valide\n---Armes disponibles:\n" + listing)
-
+          message.reply("Erreur: arme non valide\n  Armes disponibles:\n" + listing)
         }
       } else {  // distance >100
         message.reply("Distance trop grande, situation non prévue\n")
