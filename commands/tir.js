@@ -6,9 +6,8 @@ module.exports = {
   function: function (arguments, message, debug) {
     if (!process.externalData) {
       message.reply("je n'ai pas les données pour le tir,\n"+
-        "merci de lancer la commande !loadData"
-      )
-      return // pour stopper la fonction
+        "merci de lancer la commande !loadData")
+      return  // pour stopper la fonction
     }
     var [arme, dist, modif] = arguments;
     if (parseInt(dist) >= 0 && typeof parseInt(modif) === "number") {
@@ -21,6 +20,10 @@ module.exports = {
           // extraire le tableau des dd "dd_tabl" en fonction de l'arme
           let dd_table = process.externalData.dd_tir[arme]['dd']
           let dist_table = process.externalData.dd_tir['_distance']['dd']
+          // recuperer l'info 'ID' en fonction de l'arme
+//          let arme_id = process.externalData.dd_tir[arme]...
+// modifier la fonction test_tir pour rajouter l'argument id en plus du reste
+// la fonction devra afficher l'id de l'arme si le tir est reussi et une blessure est infligee
           // faire appel à test_tir
           debug.say('je lance le test de tir')
           message.reply(test_tir(dist,modif,dd_table,dist_table))
@@ -29,8 +32,7 @@ module.exports = {
           for (let weapon of Object.keys(process.externalData.dd_tir)) {
             if (weapon !== '_distance') {
               listing += weapon + " : " +
-                process.externalData.dd_tir[weapon]['name'] +
-                '\n'
+                process.externalData.dd_tir[weapon]['name'] + '\n'
             }
           }
           message.reply("Erreur: arme non valide\n  Armes disponibles:\n" + listing)
