@@ -2,7 +2,10 @@ const test_tir = require("../helpers/test_tir");
 
 module.exports = {
   name: "tir",
-  help: "Test de tir sur cible fixe à la distance x à l'arme indiquée avec modificateur y\n  ex: !tir abc 30 44\n",
+  help: "Test de tir sur cible fixe à la distance x à l'arme indiquee avec modificateur y\n" +
+          "  !tir code_arme distance modificateur\n  ex: !tir abc 30 44\n" +
+          "  le modificateur peut être négatif, la distance doit être < 100\n" +
+          "  le code renvoie la valeur blessure et l'indicateur de degats de l'arme\n",
   function: function (arguments, message, debug) {
     if (!process.externalData) {
       message.reply("je n'ai pas les données pour le tir,\n"+
@@ -17,7 +20,7 @@ module.exports = {
           // extraire le tableau des dd "dd_tabl" en fonction de l'arme
           let dd_table = process.externalData.dd_tir[arme]['dd']
           let dist_table = process.externalData.dd_tir['_distance']['dd']
-          let arme_id = process.externalData.dd_tir[arme]['ID']
+          let arme_id = process.externalData.dd_tir[arme]['id']
           // faire appel à test_tir
           debug.say('je lance le test de tir')
           message.reply(test_tir(dist,modif,dd_table,dist_table,arme_id))

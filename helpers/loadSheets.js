@@ -17,7 +17,7 @@ module.exports = async (message, debug) => {
 
   return googleSheets.spreadsheets.values.get({
     spreadsheetId: sheetId,
-    range: 'dd_tir!A:N',
+    range: 'dd_tir!A:P',  // taille de la table sur le doc GoogleSheets
   })
    .then((res) => {
       const rows = res.data.values;
@@ -30,8 +30,10 @@ module.exports = async (message, debug) => {
           let row = rows[i]
           //debug.say('chargement de la ligne ' + i)
           DICTIONNAIRE.dd_tir[row[0]] = {
-            name: row[1],
-            dd: row.slice(2).map(cell => parseFloat(cell))
+            // en vrai, je peux modifier la sheet Google pour adapter ce que je veux
+            name: row[1],  // deuxieme colonne, donc colonne 'B'
+            id: row[2],  // troisieme colonne, donc 'C'
+            dd: row.slice(3).map(cell => parseFloat(cell))
           }
         }
         debug.say(JSON.stringify(DICTIONNAIRE))
