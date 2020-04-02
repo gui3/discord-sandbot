@@ -17,13 +17,10 @@ module.exports = {
           // extraire le tableau des dd "dd_tabl" en fonction de l'arme
           let dd_table = process.externalData.dd_tir[arme]['dd']
           let dist_table = process.externalData.dd_tir['_distance']['dd']
-          // recuperer l'info 'ID' en fonction de l'arme
-//          let arme_id = process.externalData.dd_tir[arme]...
-// modifier la fonction test_tir pour rajouter l'argument id en plus du reste
-// la fonction devra afficher l'id de l'arme si le tir est reussi et une blessure est infligee
+          let arme_id = process.externalData.dd_tir[arme]['ID']
           // faire appel à test_tir
           debug.say('je lance le test de tir')
-          message.reply(test_tir(dist,modif,dd_table,dist_table))
+          message.reply(test_tir(dist,modif,dd_table,dist_table,arme_id))
         } else {  // arme non reconnue
           listing = ''
           for (let weapon of Object.keys(process.externalData.dd_tir)) {

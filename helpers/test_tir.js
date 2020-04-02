@@ -1,6 +1,6 @@
 const rollDice = require("./rollDice");
 
-module.exports = (dist,modif,dd_table,dist_table) => {
+module.exports = (dist,modif,dd_table,dist_table,id_arme) => {
 
   // préambule : tableau des valeurs-blessure
   var id_table = [2,2,2,4,4,4,5,5,6,6];
@@ -42,18 +42,19 @@ module.exports = (dist,modif,dd_table,dist_table) => {
     // indication textuelle type de blessure
     switch(inddegats) {
       case 2:
-        reply += " entravante)\n";
+        reply += " entravante) ";
         break;
       case 4:
-        reply += " grave)\n";
+        reply += " grave) ";
         break;
       case 5:
-        reply += " mortelle)\n";
+        reply += " mortelle) ";
         break;
       case 6:
-        reply += " fatale)\n";
+        reply += " fatale) ";
         break;
     }
+    reply += "ID2 de l'arme: " + id_arme + "\n"
   } else {  // échec du tir
     reply += "Échec du tir\n";
   }
