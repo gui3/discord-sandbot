@@ -13,10 +13,7 @@ module.exports = {
     if (parseInt(dist) >= 0 && typeof parseInt(modif) === "number") {
       if (parseInt(dist) <= 100) {
         // lire "arme"
-        if (
-          Object.keys(process.externalData.dd_tir).includes(arme)
-          && arme !== '_distance'
-        ) {
+        if (Object.keys(process.externalData.dd_tir).includes(arme) && arme !== '_distance') {
           // extraire le tableau des dd "dd_tabl" en fonction de l'arme
           let dd_table = process.externalData.dd_tir[arme]['dd']
           let dist_table = process.externalData.dd_tir['_distance']['dd']
