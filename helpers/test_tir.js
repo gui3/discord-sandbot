@@ -1,6 +1,6 @@
 const rollDice = require("./rollDice");
 
-module.exports = (dist,modif,dd_table,dist_table,id_arme) => {
+module.exports = (dist,modif,arme_x1,id_arme) => {
 
   // preambule : tableau des valeurs-blessure
   var id_table = [2,2,2,4,4,4,5,5,6,6];
@@ -18,18 +18,26 @@ module.exports = (dist,modif,dd_table,dist_table,id_arme) => {
   } else if (score_de > 95) {
     reply += "Succès critique\n";
   }
-  // lire dd en fonction de la distance
-  var ind = 0;  // indice lecture tableau
-  while (dist > dist_table[ind]) {
-    ind++;
-  }
-  // determination du dd pour une distance intermédiaire
-  if (ind >= 1) {
-    var dd = (dd_table[ind]-dd_table[ind-1])*(dist-dist_table[ind-1])/(dist_table[ind]-dist_table[ind-1])+dd_table[ind-1];
-    dd = Math.round(dd);
-  } else {
-    var dd = dd_table[0];
-  }
+
+  // ----- lire dd en fonction de la distance ---------- (version precedente)
+//  var ind = 0;  // indice lecture tableau
+//  while (dist > dist_table[ind]) {
+//    ind++;
+//  }
+//  // determination du dd pour une distance intermédiaire
+//  if (ind >= 1) {
+//    var dd = (dd_table[ind]-dd_table[ind-1])*(dist-dist_table[ind-1])/(dist_table[ind]-dist_table[ind-1])+dd_table[ind-1];
+//    dd = Math.round(dd);
+//  } else {
+//    var dd = dd_table[0];
+//  }
+
+  // ----- determination dd de tir ---------- (fonction exponentielle)
+  let [delta,y0,y1] = [1,5,50]
+  let a = y1-y0-arme_x1*delta
+  let b = 2.5/arme_x1
+  let dd = Math.round(a*(1-Math.exp(-b*dist))+y0+delta*dist)
+
   reply += "Degré de difficulté: " + dd;
   // analyse du resultat
   if (score_tir >= dd) {  // reussite du tir

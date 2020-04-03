@@ -18,12 +18,14 @@ module.exports = {
         // lire "arme"
         if (Object.keys(process.externalData.dd_tir).includes(arme) && arme !== '_distance') {
           // extraire le tableau des dd "dd_tabl" en fonction de l'arme
-          let dd_table = process.externalData.dd_tir[arme]['dd']
-          let dist_table = process.externalData.dd_tir['_distance']['dd']
+          //let dd_table = process.externalData.dd_tir[arme]['dd']
+          //let dist_table = process.externalData.dd_tir['_distance']['dd']
+          // extraire ID(2) de l'arme et variable x1 pour fonction de DD de tir
           let arme_id = process.externalData.dd_tir[arme]['id']
+          let arme_x1 = process.externalData.dd_tir[arme]['x1']
           // faire appel à test_tir
           debug.say('je lance le test de tir')
-          message.reply(test_tir(dist,modif,dd_table,dist_table,arme_id))
+          message.reply(test_tir(dist,modif,arme_x1,arme_id))
         } else {  // arme non reconnue
           listing = ''
           for (let weapon of Object.keys(process.externalData.dd_tir)) {

@@ -33,7 +33,8 @@ module.exports = async (message, debug) => {
             // en vrai, je peux modifier la sheet Google pour adapter ce que je veux
             name: row[1],  // deuxieme colonne, donc colonne 'B'
             id: row[2],  // troisieme colonne, donc 'C'
-            dd: row.slice(3).map(cell => parseFloat(cell))
+            x1: row[3],  // colonne D
+            //dd: row.slice(4).map(cell => parseFloat(cell)) partie du tableau inutile
           }
         }
         debug.say(JSON.stringify(DICTIONNAIRE))
