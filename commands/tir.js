@@ -4,8 +4,9 @@ module.exports = {
   name: "tir",
   help: "Test de tir sur cible fixe à la distance x à l'arme indiquee avec modificateur y\n" +
           "  !tir code_arme distance modificateur\n  ex: !tir abc 30 44\n" +
-          "  le modificateur peut être négatif, la distance doit être < 100\n" +
+          "  le modificateur peut être négatif, la distance doit être < 150\n" +
           "  le code renvoie la valeur blessure et l'indicateur de degats de l'arme\n",
+  ignorehelp: 0,
   function: function (arguments, message, debug) {
     if (!process.externalData) {
       message.reply("je n'ai pas les données pour le tir,\n"+
@@ -14,7 +15,7 @@ module.exports = {
     }
     var [arme, dist, modif] = arguments;
     if (parseInt(dist) >= 0 && typeof parseInt(modif) === "number") {
-      if (parseInt(dist) <= 100) {
+      if (parseInt(dist) <= 150) {
         // lire "arme"
         if (Object.keys(process.externalData.dd_tir).includes(arme) && arme !== '_distance') {
           // extraire le tableau des dd "dd_tabl" en fonction de l'arme
@@ -36,8 +37,8 @@ module.exports = {
           }
           message.reply("Erreur: arme non valide\n  Armes disponibles:\n" + listing)
         }
-      } else {  // distance >100
-        message.reply("Distance trop grande, situation non prévue\n")
+      } else {  // distance >150
+        message.reply("Distance trop grande, on ne peut pas viser à cette distance\n")
       }
     }
     else {  // distance ou modificateur non valide
