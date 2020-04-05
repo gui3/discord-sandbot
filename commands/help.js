@@ -7,7 +7,7 @@ module.exports = {
     let prefix = message.guild.guildVars.prefix;
     Object.keys(message.client.botVars.commands).forEach(key => {
       let command = message.client.botVars.commands[key];
-      if (command.ignorehelp) {
+      if (!command.ignorehelp) {
         reply += "\n___ Commande "+prefix+command.name+" ___\n";
         reply += command.help ? command.help : "(pas d'aide sur cette commande...)";
         reply += "\n";
