@@ -4,7 +4,6 @@ module.exports = {
   name: "calc",
   help: "Calcul avec jets de dés" +
     "\npar ex: 1d40 +5 /2d20",
-  ignorehelp: 0,
   function: function (arguments) {
     var results = [];
     var argumentString = arguments.join(" ");

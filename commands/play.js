@@ -8,7 +8,6 @@ module.exports = {
   help: "Cherche la musique indiquée sur youtube\n"+
     "et la lance dans le chat vocal ou vous êtes",
   async: true,
-  ignorehelp: 0,
   function: async function (arguments, message, debug) {
     //check if voice channel
     message.reply("... je cherche la musique")

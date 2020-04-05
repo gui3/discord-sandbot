@@ -1,7 +1,7 @@
 module.exports = {
   name: "test",
   help: "utilise ce template pour faire des fonctions",
-  ignorehelp: 1,
+  ignorehelp: true,
   function: function (arguments, message, debug) {
     // arguments est la liste de mots qui suivent la commande
     //   par exemple pour !roll 1d100, arguments = ["1d100"]

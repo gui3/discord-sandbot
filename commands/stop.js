@@ -2,7 +2,6 @@ module.exports = {
   name: "stop",
   help: "Stoppe la musique du salon vocal sur lequel vous êtes.",
   async: true,
-  ignorehelp: 0,
   function: async function (arguments, message, debug) {
 
     // delete the bot from all voicechannels

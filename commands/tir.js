@@ -6,7 +6,6 @@ module.exports = {
           "  !tir code_arme distance modificateur\n  ex: !tir abc 30 44\n" +
           "  le modificateur peut être négatif, la distance doit être < 150\n" +
           "  le code renvoie la valeur blessure et l'indicateur de degats de l'arme\n",
-  ignorehelp: 0,
   function: function (arguments, message, debug) {
     if (!process.externalData) {
       message.reply("je n'ai pas les données pour le tir,\n"+

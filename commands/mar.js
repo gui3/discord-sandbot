@@ -5,7 +5,6 @@ module.exports = {
   help: "Permet de lancer un combat en mode martyr\n"+
     "!mar (stat ennemi 1) (stat ennemi 2) ...\n"+
     "ex: !mar 40 50 50",
-  ignorehelp: 0,
   function: function (arguments) {
 
     var results = [];

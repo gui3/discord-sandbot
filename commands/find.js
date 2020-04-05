@@ -7,7 +7,6 @@ module.exports = {
   help: "Cherche les mots indiqués sur Youtube\n"+
     "et affiche la video",
   async: true,
-  ignorehelp: 0,
   function: async function (arguments, message) {
 
     var query = arguments.join(" ");
