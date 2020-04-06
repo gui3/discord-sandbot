@@ -6,37 +6,46 @@ module.exports = {
     "!sos (stat ennemi 1) (stat ennemi 2) ...\n"+
     "ex: !sos 40 50 50",
   function: function (arguments) {
-
     var results = [];
     var ignored = [];
     var critical = [];
+    var N = 0;  // nombre d'avdersaires
+    var sum = 0;  // total du score de combat en cumulé
 
     arguments.forEach((arg, ix) => {
+      N++
       var stat = parseFloat(arg);
       if (isNaN(stat)) {
         ignored.push(arg);
       } else {
         var dice = rollDice("1d100").sum;
+        // gestion des critiques
         if (dice === 1) {
           critical.push({
             type: "-1d100",
             result: - rollDice("1d100").sum
           });
+          var info_critiq = "  -> critique -1d100\n"
         } else if (dice === 100) {
           critical.push({
-            type: "1d100",
+            type: "+1d100",
             result: rollDice("1d100").sum
           });
+          var info_critiq = "  -> critique +1d100\n"
         } else if (dice < 6) {
           critical.push({
             type: "-1d20",
             result: - rollDice("1d20").sum
           });
+          var info_critiq = "  -> critique -1d20\n"
         } else if (dice > 94) {
           critical.push({
-            type: "1d20",
+            type: "+1d20",
             result: rollDice("1d20").sum
           });
+          var info_critiq = "  -> critique +1d20\n"
+        } else {
+          var info_critiq = "\n"
         }
         var result = dice + stat;
         var modif = "";
@@ -48,22 +57,22 @@ module.exports = {
           dice: dice,
           stat: stat,
           result: result,
-          modif: modif
+          modif: modif,
+          info_critiq: info_critiq
         });
       }
     });
 
-    var reply = "COMBAT en mode 1vsN ___\n";
-    var sum = 0;
+    var reply = "COMBAT en mode 1v" + N + "\n";
 
     results.forEach(res => {
-      reply += res.stat+" d100: "+res.dice +
-        " " + res.modif + " = "+res.result+"\n";
+      reply += res.stat + " + " + res.dice + " (d100) " +
+                 res.modif + " = " + res.result + res.info_critiq;
       sum += res.result;
     });
 
     if (critical.length > 0) {
-      reply += "\nCritiques :"
+      reply += "\nPrise en compte des critiques :"
       critical.forEach(c => {
         reply += "\n" + c.type + " : " + c.result + " ";
         sum += c.result;
@@ -77,7 +86,8 @@ module.exports = {
       })
       reply += ")"
     }
-    reply += "\nresultat du fight : "+sum
+    reply += "\n"
+    reply += "\nRésultat cumulé : " + sum
 
     return reply;
 
