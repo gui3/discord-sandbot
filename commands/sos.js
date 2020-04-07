@@ -80,7 +80,6 @@ module.exports = {
         sum += c.result;
       });
     }
-
     reply += "\n"  // saut de ligne
 
     if (ignored.length > 0) {

@@ -2,10 +2,13 @@ const rollDice = require("./rollDice");
 
 module.exports = (arguments) => {
 
+  // rajouter input 'mar' ou 'sos' et integrer l'affichage des resultats a cette fonction
   var results = [];
   var ignored = [];  // arguments qui ne sont pas reconnus comme des nombres
   var critical = [];
   var n = 0;  // nombre d'avdersaires
+
+//  return n
 
   arguments.forEach((arg, ix) => {
     var stat = parseFloat(arg);
@@ -60,4 +63,5 @@ module.exports = (arguments) => {
   });
 
   return [results,ignored,critical,n]
+//  return n
 };

@@ -11,7 +11,24 @@ module.exports = {
 
     var [results,ignored,critical,n] = test_sos(arguments);
 
-    var reply = "COMBAT en mode 1v" + n + " sans atout Martyr\n";
+//    var n = test_sos(arguments);
+//    var n = 2
+//    var n = rollDice("1d100").sum
+
+//    var results = []
+//    results.push({
+//      dice: 23,
+//      stat: 40,
+//      result: 73,
+//      modif: 1,
+//      info_critiq: " critique!"
+//    });
+//    var ignored = []
+//    var critical = []
+
+//    message.reply("COMBAT en mode 1v" + n + " sans atout Martyr\n") ça, ça ne marche absolument pas !!!
+    var reply = "COMBAT en mode 1v" + n + " sans atout Martyr\n"
+    return reply
 
     results.forEach(res => {
       reply += res.stat + " + " + res.dice + " (d100) " +
@@ -37,7 +54,7 @@ module.exports = {
     reply += "\n"
     reply += "\nRésultat cumulé : " + total
 
-    return reply;
+    return reply
 
   }
 };
