@@ -13,11 +13,11 @@ module.exports = {
     var sum = 0;  // total du score de combat en cumulé
 
     arguments.forEach((arg, ix) => {
-      N++
       var stat = parseFloat(arg);
       if (isNaN(stat)) {
         ignored.push(arg);
       } else {
+        N++
         var dice = rollDice("1d100").sum;
         // gestion des critiques
         if (dice === 1) {
@@ -71,22 +71,25 @@ module.exports = {
       sum += res.result;
     });
 
+    reply += "\n"  // saut de ligne
+
     if (critical.length > 0) {
-      reply += "\nPrise en compte des critiques :"
+      reply += "Prise en compte des critiques :\n"
       critical.forEach(c => {
-        reply += "\n" + c.type + " : " + c.result + " ";
+        reply += c.type + " : " + c.result + " \n";
         sum += c.result;
       });
     }
 
+    reply += "\n"  // saut de ligne
+
     if (ignored.length > 0) {
-      reply += "\n(ignored arguments :";
+      reply += "(ignored arguments :";
       ignored.forEach(ign => {
         reply += " " + ign;
       })
-      reply += ")"
+      reply += ")\n"
     }
-    reply += "\n"
     reply += "\nRésultat cumulé : " + sum
 
     return reply;
