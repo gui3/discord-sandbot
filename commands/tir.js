@@ -2,10 +2,11 @@ const test_tir = require("../helpers/test_tir");
 
 module.exports = {
   name: "tir",
+  shorthelp: "test de tir",
   help: "Test de tir sur cible fixe à la distance x à l'arme indiquee avec modificateur y\n" +
-          "  !tir code_arme distance modificateur\n  ex: !tir abc 30 44\n" +
-          "  le modificateur peut être négatif, la distance doit être < 150\n" +
-          "  le code renvoie la valeur blessure et l'indicateur de degats de l'arme\n",
+          "!tir code_arme distance modificateur\n  ex: !tir abc 30 44\n" +
+          "le modificateur peut être négatif, la distance doit être < 150\n" +
+          "le code renvoie la valeur blessure et l'indicateur de degats de l'arme\n",
   function: function (arguments, message, debug) {
     if (!process.externalData) {
       message.reply("je n'ai pas les données pour le tir,\n"+

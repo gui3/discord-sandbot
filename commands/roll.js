@@ -2,9 +2,9 @@ const rollDice = require("../helpers/rollDice");
 
 module.exports = {
   name: "roll",
+  shorthelp: "jet de dés d'une valeur",
   help: "Lance plusieurs dés d'une valeur\n"+
-    "!roll 2d100\n"+
-    "!roll 10d20",
+    "exple: !roll 2d100 ou !roll 10d20",
   function: function (arguments) {
 
     var argument = arguments.join("");

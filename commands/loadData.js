@@ -2,7 +2,7 @@ const loadSheets = require('../helpers/loadSheets')
 
 module.exports = {
   name: "loadData",
-  help: "Charge les données externes (depuis la Google SpreadSheet)",
+  help: "Charge les données externes (depuis une Google SpreadSheet)",
   ignorehelp: true,
   function: function (arguments, message, debug) {
     debug.say("je tente de charger la spreadsheet")

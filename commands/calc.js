@@ -2,8 +2,9 @@ const rollDice = require("../helpers/rollDice");
 
 module.exports = {
   name: "calc",
-  help: "Calcul avec jets de dés" +
-    "\npar ex: 1d40 +5 /2d20",
+  shorthelp: "calcul avec jets de dés",
+  help: "Calcul (+,-,*,/) avec jets de dés et nombres\n" +
+        "exple: 1d40 +5 /2d20",
   function: function (arguments) {
     var results = [];
     var argumentString = arguments.join(" ");

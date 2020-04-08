@@ -14,9 +14,9 @@ module.exports = (dist,modif,arme_x1,id_arme) => {
   reply += "Résultat du test: " + score_tir + " (dé=" + score_de + ")\n";
   // gestion des critiques
   if (score_de < 6) {
-    reply += "Échec critique\n";
+    reply += "-> Échec critique\n";
   } else if (score_de > 95) {
-    reply += "Succès critique\n";
+    reply += "-> Succès critique\n";
   }
 
   // ----- lire dd en fonction de la distance ---------- (version precedente)
@@ -38,11 +38,11 @@ module.exports = (dist,modif,arme_x1,id_arme) => {
   let b = 2.5/arme_x1
   let dd = Math.round(a*(1-Math.exp(-b*dist))+y0+delta*dist)
 
-  reply += "Degré de difficulté: " + dd;
+  reply += "Degré de difficulté: " + dd + "\n";
   // analyse du resultat
   if (score_tir >= dd) {  // reussite du tir
     var reussite = score_tir - dd;
-    reply += " (dépassé de " + reussite + ")\n";
+    reply += "**Tir réussi** (DD dépassé de " + reussite + ")\n";
     // division euclidienne pour obtenir le chiffre des dizaines (ne pas depasser la taille du tableau)
     var dizaine = Math.min(Math.floor(reussite/10) , id_table.length-1);
     var inddegats = id_table[dizaine]
@@ -50,10 +50,10 @@ module.exports = (dist,modif,arme_x1,id_arme) => {
     // indication textuelle type de blessure
     switch(inddegats) {  // precision de l'indic degats adapte de l'arme si besoin
       case 2:
-        reply += " entravante) ; ID " + id_arme + "\n";
+        reply += " entravante) ; ID(2) " + id_arme + "\n";
         break;
       case 4:
-        reply += " grave) ; ID " + 3*id_arme + "\n";
+        reply += " grave) ; ID(4) " + 3*id_arme + "\n";
         break;
       case 5:
         reply += " mortelle)\n";
@@ -63,7 +63,7 @@ module.exports = (dist,modif,arme_x1,id_arme) => {
         break;
     }
   } else {  // echec du tir
-    reply += "\nÉchec du tir\n";
+    reply += "**Échec du tir**\n";
   }
   return reply
 };

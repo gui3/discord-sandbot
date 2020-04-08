@@ -97,11 +97,15 @@ module.exports = (arguments,type) => {
   switch (type) {
     case "sos":
     total = total+de_critiq
-      reply += "\nRésultat cumulé : " + total
+      reply += "\nRésultat cumulé : **" + total + "**"
       break;
     case "mar":
       total = Math.round(total/n+de_critiq)
-      reply += "\nRésultat cumulé /" + n + " + dés critiques : " + total
+      if (critical.length > 0) {
+        reply += "\nRésultat cumulé /" + n + " + dés critiques : **" + total + "**"
+      } else {
+        reply += "\nRésultat cumulé /" + n + " : **" + total + "**"
+      }
       break;
     }
 
