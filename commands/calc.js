@@ -3,7 +3,7 @@ const rollDice = require("../helpers/rollDice");
 module.exports = {
   name: "calc",
   shorthelp: "calcul avec jets de dés",
-  help: "Calcul (+,-,*,/) avec jets de dés et nombres\n" +
+  help: "Calcul (+ - * /) avec jets de dés et nombres\n" +
         "exple: 1d40 +5 /2d20",
   function: function (arguments) {
     var results = [];
