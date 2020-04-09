@@ -10,6 +10,7 @@ module.exports = (arguments,type) => {
   var total = 0;
   var de_critiq = 0;
 
+// ---------- tests combat successifs -----------------------------------
   arguments.forEach((arg, ix) => {
     var stat = parseFloat(arg);
     if (isNaN(stat)) {
@@ -63,7 +64,7 @@ module.exports = (arguments,type) => {
     }
   });
 
-// --------------------------------------------------
+// ---------- affichage resultats -----------------------------------
   switch (type) {
     case "sos":
       var reply = "COMBAT en mode 1v" + n + " sans atout Martyr\n"
