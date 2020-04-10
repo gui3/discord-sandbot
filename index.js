@@ -74,8 +74,7 @@ client.on("message", message => {
     };
 
     message.reply(
-      "lance une commande ==========================\n"
-      + message.content +
+      " commande " + message.content +
       (debug.silent ? "\n" : " --DEBUG MODE activé\n")
     )
 
