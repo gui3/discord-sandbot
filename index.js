@@ -61,10 +61,14 @@ client.on("message", message => {
 
 
   if (message.content.startsWith(message.guild.guildVars.prefix)) {
-    //you talking to the bot
+    // test message commence par prefixe
+    // you talking to the bot
+
     var arguments = message.content
       .slice(message.guild.guildVars.prefix.length).split(/[ \r\n]+/);
     var command = arguments.shift();
+    let auteur = message.author  // auteur du message
+    //new Discord.DMChannel(client,data);
 
     const debug = new Debugger(message);
     debug.silent = !arguments.includes("debug")
@@ -74,7 +78,7 @@ client.on("message", message => {
     };
 
     message.reply(
-      " commande " + message.content +
+      "commande *" + message.content + "*" +
       (debug.silent ? "\n" : " --DEBUG MODE activé\n")
     )
 
@@ -94,7 +98,7 @@ client.on("message", message => {
           .catch(err => debug.say("ERREUR : " + err.message));
         }
         else {
-          result = c.function(arguments,message, debug);
+          result = c.function(arguments, message, debug);
         }
       } catch (err) {
         debug.say("ERREUR : "+err.message)
