@@ -7,15 +7,17 @@ require('dotenv').config();
 const client = new Discord.Client();
 client.botVars = {}
 
+const prefix = "!"
+
 // READY -------------------------------------
 function botReboot(guild) {
   function getFirstChan () {
     return guild.channels.array().sort((a,b)=>a.createdAt-b.createdAt);
   };
   guild.guildVars = {
-    prefix: "!",
+    prefix: prefix,
     mainChan: getFirstChan(),
-    getFirstChan: getFirstChan,
+    getFirstChan: getFirstChan
   };
   // guild.channels.array().forEach(chan => {
   //   if (chan.type === "text") {
@@ -59,16 +61,13 @@ const Debugger = require("./helpers/Debugger")
 
 client.on("message", message => {
 
-
-  if (message.content.startsWith(message.guild.guildVars.prefix)) {
-    // test message commence par prefixe
+//  if (message.content.startsWith(message.guild.guildVars.prefix)) {
+    if (message.content.startsWith(prefix)) {
+    // message commence par prefixe
     // you talking to the bot
-
     var arguments = message.content
       .slice(message.guild.guildVars.prefix.length).split(/[ \r\n]+/);
     var command = arguments.shift();
-    let auteur = message.author  // auteur du message
-    //new Discord.DMChannel(client,data);
 
     const debug = new Debugger(message);
     debug.silent = !arguments.includes("debug")
@@ -87,6 +86,13 @@ client.on("message", message => {
     if (client.botVars.commands[command]) {
       let c = client.botVars.commands[command]
       try {
+
+// ----------------------------------------------------------------------
+//        let auteur = message.author  // auteur du message
+//        message.delete()  // supprime message (fait planter aussi)
+        message.author.send("Message privé en DM")  // fait planter le bot
+// ----------------------------------------------------------------------
+
         if (c.async) {
           c.function(arguments, message, debug)
           .then(result => message.reply(
