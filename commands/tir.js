@@ -13,7 +13,7 @@ module.exports = {
         "merci de lancer la commande !loadData")
       return  // pour stopper la fonction
     }
-    var [arme, dist, modif] = arguments.toLowerCase();
+    var [arme, dist, modif] = arguments
     if (parseInt(dist) >= 0 && typeof parseInt(modif) === "number") {
       if (parseInt(dist) <= 150) {
         // lire "arme"

@@ -62,12 +62,16 @@ const Debugger = require("./helpers/Debugger")
 client.on("message", message => {
 
 //  if (message.content.startsWith(message.guild.guildVars.prefix)) {
-    if (message.content.startsWith(prefix)) {
+    // ligne ci-dessus ne fonctionne pas avec '<client>.send()' (code original de Guillaume)
+    // correction proposee: prefix est defini par une 'const' (modif Corentin)
+  if (message.content.startsWith(prefix)) {
     // message commence par prefixe
     // you talking to the bot
+    message.content = message.content.toLowerCase()
     var arguments = message.content
-      .slice(message.guild.guildVars.prefix.length).split(/[ \r\n]+/);
-    var command = arguments.shift();
+      .slice(message.guild.guildVars.prefix.length).split(/[ \r\n]+/)
+    // le code ne distinguera pas les majuscules
+    var command = arguments.shift()
 
     const debug = new Debugger(message);
     debug.silent = !arguments.includes("debug")
@@ -87,11 +91,17 @@ client.on("message", message => {
       let c = client.botVars.commands[command]
       try {
 
-// ----------------------------------------------------------------------
-//        let auteur = message.author  // auteur du message
-//        message.delete()  // supprime message (fait planter aussi)
-        message.author.send("Message privé en DM")  // fait planter le bot
-// ----------------------------------------------------------------------
+// ----- envoi d'un message privé à celui qui lance la commande ----------
+        // auteur = message.author  // auteur du message
+//        message.delete()  // supprime message (pas d'autorisation)
+//        message.author.send("Message privé en DM")  // message prive
+// ce petit bout de code permet de faire la même chose en envoyant
+// le message (resultat de la fonction appelee par ex) a la personne mentionnee
+// en vrai ça marche pas
+//        let mention = message.mentions.first()
+//        if (mention !== null && !mention.bot) {
+//          mention.send("Message privé en DM")
+//        }
 
         if (c.async) {
           c.function(arguments, message, debug)
