@@ -64,13 +64,13 @@ client.on("message", message => {
 //  if (message.content.startsWith(message.guild.guildVars.prefix)) {
     // ligne ci-dessus ne fonctionne pas avec '<client>.send()' (code original de Guillaume)
     // correction proposee: prefix est defini par une 'const' (modif Corentin)
+    // 'message.guild.guildVars.prefix = prefix'
   if (message.content.startsWith(prefix)) {
     // message commence par prefixe
     // you talking to the bot
-    message.content = message.content.toLowerCase()
-    var arguments = message.content
-      .slice(message.guild.guildVars.prefix.length).split(/[ \r\n]+/)
-    // le code ne distinguera pas les majuscules
+    var msg = message.content.toLowerCase()
+    var arguments = msg.slice(prefix.length).split(/[ \r\n]+/)
+    // le code ne distinguera pas les majuscules apres '!'
     var command = arguments.shift()
 
     const debug = new Debugger(message);
@@ -81,7 +81,7 @@ client.on("message", message => {
     };
 
     message.reply(
-      "commande *" + message.content + "*" +
+      "commande *" + msg + "*" +
       (debug.silent ? "\n" : " --DEBUG MODE activé\n")
     )
 
@@ -91,23 +91,24 @@ client.on("message", message => {
       let c = client.botVars.commands[command]
       try {
 
+
 // ----- envoi d'un message privé à celui qui lance la commande ----------
-        // auteur = message.author  // auteur du message
 //        message.delete()  // supprime message (pas d'autorisation)
-//        message.author.send("Message privé en DM")  // message prive
-// ce petit bout de code permet de faire la même chose en envoyant
-// le message (resultat de la fonction appelee par ex) a la personne mentionnee
-// en vrai ça marche pas
-//        let mention = message.mentions.first()
-//        if (mention !== null && !mention.bot) {
-//          mention.send("Message privé en DM")
-//        }
+//        message.author.send("Message privé en DM")  // message prive (fonctionne)
+// ----- message prive aux personnes mentionnees -------------------------
+//        let mention = message.mentions.users
+//        mention.forEach((destinataire) => {
+//          if (!destinataire.bot) {
+//            destinataire.send("Coucou")
+//          }
+//        })
+// -----------------------------------------------------------------------
+
 
         if (c.async) {
           c.function(arguments, message, debug)
           .then(result => message.reply(
-            "Retour de " +
-            message.content +
+            "Retour de " + msg +
             "---------------------\n" +
             result
           ))

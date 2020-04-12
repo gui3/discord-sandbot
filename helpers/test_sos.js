@@ -2,7 +2,6 @@ const rollDice = require("./rollDice");
 
 module.exports = (arguments,type) => {
 
-  // rajouter input 'mar' ou 'sos' et integrer l'affichage des resultats a cette fonction
   var results = [];
   var ignored = [];  // arguments qui ne sont pas reconnus comme des nombres
   var critical = [];
