@@ -94,7 +94,7 @@ client.on("message", message => {
 
 // ----- envoi d'un message privé à celui qui lance la commande ----------
 //        message.delete()  // supprime message (pas d'autorisation)
-//        message.author.send("Message privé en DM")  // message prive (fonctionne)
+//        message.author.send("Message privé en DM")  // message prive
 // ----- message prive aux personnes mentionnees -------------------------
 //        let mention = message.mentions.users
 //        mention.forEach((destinataire) => {
@@ -108,9 +108,8 @@ client.on("message", message => {
         if (c.async) {
           c.function(arguments, message, debug)
           .then(result => message.reply(
-            "Retour de " + msg +
-            "---------------------\n" +
-            result
+            "Retour de *" + msg +
+            "* ---------------------\n" + result
           ))
           .catch(err => debug.say("ERREUR : " + err.message));
         }
@@ -129,7 +128,10 @@ client.on("message", message => {
       debug.say("*j'ai pas la permission de supprimer des messages*")
     });
     if (result) {
-      message.reply(result);
+      // retour fonction sous forme de reponse au commanditaire
+//      message.reply(result)
+      // retour fonction peut etre un message general dans le chat
+      message.channel.send(result)
     }
   }
 

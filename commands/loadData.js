@@ -1,7 +1,7 @@
 const loadSheets = require('../helpers/loadSheets')
 
 module.exports = {
-  name: "loadData",
+  name: "loaddata",
   help: "Charge les données externes (depuis une Google SpreadSheet)",
   ignorehelp: true,
   function: function (arguments, message, debug) {
@@ -13,7 +13,7 @@ module.exports = {
             'j\'ai récupéré cette data :\n' +
             JSON.stringify(process.externalData)
           )
-          message.reply('data bien récupérée')
+          message.reply('Data bien récupérée')
         }
       })
       .catch(err => debug.error(err))

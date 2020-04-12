@@ -4,7 +4,7 @@ module.exports = {
   name: "calc",
   shorthelp: "calcul avec jets de dés",
   help: "Calcul (+ - * /) avec jets de dés et nombres\n" +
-        "exple: 1d40 +5 /2d20",
+        "exple: *1d40 +5 /2d20*",
   function: function (arguments) {
     var results = [];
     var argumentString = arguments.join(" ");
@@ -31,8 +31,8 @@ module.exports = {
       })
       reply += "\nCalcul intermédiaire : "+calcString + "\n";
     }
-    reply += "Resultat : "+ result;
+    reply += "Resultat : **"+ result + "**";
 
-    return reply;
+    message.reply(reply)
   }
 };

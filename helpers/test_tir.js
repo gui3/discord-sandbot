@@ -14,9 +14,9 @@ module.exports = (dist,modif,arme_x1,id_arme) => {
   reply += "Résultat du test: " + score_tir + " (dé=" + score_de + ")\n";
   // gestion des critiques
   if (score_de < 6) {
-    reply += "-> Échec critique\n";
+    reply += " -> Échec critique :red_circle:\n";
   } else if (score_de > 95) {
-    reply += "-> Succès critique\n";
+    reply += " -> Succès critique :green_circle:\n";
   }
 
   // ----- lire dd en fonction de la distance ---------- (version precedente)
