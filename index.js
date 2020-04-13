@@ -69,9 +69,10 @@ client.on("message", message => {
     // le message commence par 'prefix' -> instruction pour le bot
 
 // ----- definition variable 'arguments' ---------------------
-    var msg = message.content.toLowerCase()
+    // var msg = message.content.toLowerCase()
     // esperer que .toLowerCase() n'affecte pas les mentions
-    var arguments = msg.slice(prefix.length).split(/[ \r\n]+/)
+    var arguments = message.content.toLowerCase()
+      .slice(prefix.length).split(/[ \r\n]+/)
     // le code ne distinguera pas les majuscules apres '!'
 // ----- definition variable 'command' -----------------------
     var command = arguments.shift()
@@ -91,12 +92,39 @@ client.on("message", message => {
 //        message.delete()  // supprime message (pas d'autorisation)
 //        message.author.send("Message privé en DM")  // message prive
 // ----- message prive aux personnes mentionnees -------------------------
-    let mention = message.mentions.users
-    if (mention.first() != null) {  // >1 mention dans le message
+    let mentions = message.mentions.users
+    mentions.forEach((destinataire) => {
+      // déplacé ici pour que arguments soit nettoyé avant processing
+      arguments.pop(arguments.indexOf(destinataire))
+    })
+
+    let msg = [prefix+command, ...arguments].join(' ')
+    let sendReply // La future fonction pour repondre
+    if (mentions.first() != null) {  // >1 mention dans le message
       message.reply("Résultat de *" + msg + "* sera envoyé en DM")
+      // DEFINITION DE LA FONCTION DE REPONSE
+      sendReply = function (message, text) {
+        let envoi = false
+        message.mentions.users.forEach((destinataire) => {
+          if (!destinataire.bot && String(destinataire.presence.status) == 'online') {
+            destinataire.send("Résultat de *" + message.content +"*")
+            destinataire.send(text)
+            envoi = true
+          } else if (destinataire.bot) {
+            message.reply(destinataire.username + " est un bot")
+          } else if (String(destinataire.presence.status) != 'online') {
+            message.reply(destinataire.username + " est absent")
+          }
+        })
+        if (!envoi) { message.reply("Aucun destinataire valide") }
+      }
     } else {  // pas de mention dans le message
       message.reply("commande *" + msg + "*" +
         (debug.silent ? "\n" : " ---DEBUG MODE activé"))
+      // sendReply par défaut
+      sendReply = function (message, text) {
+        message.reply(text)
+      }
     }
 
     let result  // resultat de fonction (sous forme texte)
@@ -106,14 +134,14 @@ client.on("message", message => {
       try {
         if (c.async) {
           c.function(arguments, message, debug)
-          .then(result => message.reply(
-            "Retour de *" + msg +
-            "* --------------------\n" + result
+          .then(result => sendReply( // utilisation de la fonction de reponse
+            message,
+            result
           ))
           .catch(err => debug.say("ERREUR : " + err.message));
         }
         else {
-          result = c.function(arguments, message, debug);
+          sendReply(message, c.function(arguments, message, debug)) // deuxieme utilisation
         }
       } catch (err) {
         debug.say("ERREUR : "+err.message)
@@ -124,29 +152,7 @@ client.on("message", message => {
     }
     message.delete().catch(err => {
       debug.say("*j'ai pas la permission de supprimer des messages*")
-    });
-// ------------------------------------------------------------------
-    if (result) {
-      if (mention.first() != null) {  // retour par message prive
-        let envoi = false
-        mention.forEach((destinataire) => {
-          arguments.pop(arguments.indexOf(destinataire))
-          if (!destinataire.bot && String(destinataire.presence.status) == 'online') {
-            destinataire.send("Résultat de *" + msg +"* par " + message.author.username)
-            destinataire.send(result)
-            envoi = true
-          } else if (destinataire.bot) {
-            message.reply(destinataire.username + " est un bot")
-          } else if (String(destinataire.presence.status) != 'online') {
-            message.reply(destinataire.username + " est absent")
-          }
-        })
-        if (!envoi) { message.reply("Aucun destinataire valide") }
-      }
-      else {  // retour fonction sous forme de reponse au commanditaire dans le chat commun
-        message.reply(result)
-      }
-    }
+    })
 // ------------------------------------------------------------------
   }
   else if (message.content.match(/OUI OU MERDE/i)) { // outil décisionnel
@@ -154,8 +160,8 @@ client.on("message", message => {
       "MERDE","MERDE","MERDE",
       "ZBRADARALDJAN"]
       [Math.floor(Math.random() * 7)]);
-  };
-});
+  }
+})
 // END ------------------------------
 
 
@@ -164,7 +170,7 @@ client.on("guildMemberAdd", (client, member) => {
   member.send(
     `Welcome on the server! Please be aware that we won't tolerate troll, spam or harassment. Have fun 😀`
   )
-});
+})
 
 // CONNECTION ---------------------------------
 client.login(process.env.BOT_TOKEN)
