@@ -91,33 +91,15 @@ client.on("message", message => {
 //        message.delete()  // supprime message (pas d'autorisation)
 //        message.author.send("Message privé en DM")  // message prive
 // ----- message prive aux personnes mentionnees -------------------------
-    let envoi_dm = false
     let mention = message.mentions.users
-    if (mention.first() !== null) {  // >1 mention dans le message
-      mention.forEach((destinataire) => {
-        arguments.pop(arguments.indexOf(destinataire))
-        if (!destinataire.bot && String(destinataire.presence.status) == 'online') {
-          destinataire.send("Résultat de *" + msg +"* par " + message.author.username)
-          envoi_dm = true
-        } else if (String(destinataire.presence.status) != 'online') {
-          message.reply(destinataire.username + " est absent")
-        } else if (destinataire.bot) {
-          message.reply(destinataire.username + " est un bot")
-        }
-      })
-      if (envoi_dm) {
-        message.reply("Résultat de *" + msg + "* envoyé en DM")
-      } else {
-        message.reply("Aucun destinataire valide")
-        return;  // annule la fonction
-      }
+    if (mention.first() != null) {  // >1 mention dans le message
+      message.reply("Résultat de *" + msg + "* sera envoyé en DM")
+    } else {  // pas de mention dans le message
+      message.reply("commande *" + msg + "*" +
+        (debug.silent ? "\n" : " ---DEBUG MODE activé"))
     }
-// -----------------------------------------------------------------------
 
-    message.reply("commande *" + msg + "*" +
-      (debug.silent ? "\n" : " --DEBUG MODE activé\n"))
-
-    let result  // resultat fonction (sous forme texte)
+    let result  // resultat de fonction (sous forme texte)
 
     if (client.botVars.commands[command]) {
       let c = client.botVars.commands[command]
@@ -126,7 +108,7 @@ client.on("message", message => {
           c.function(arguments, message, debug)
           .then(result => message.reply(
             "Retour de *" + msg +
-            "* ---------------------\n" + result
+            "* --------------------\n" + result
           ))
           .catch(err => debug.say("ERREUR : " + err.message));
         }
@@ -140,16 +122,32 @@ client.on("message", message => {
     else {
       message.reply("commande inconnue ...")
     }
-    message.delete().catch(err=>{
+    message.delete().catch(err => {
       debug.say("*j'ai pas la permission de supprimer des messages*")
     });
+// ------------------------------------------------------------------
     if (result) {
-      // retour fonction sous forme de reponse au commanditaire dans le chat commun
-      message.reply(result)
-      // retour fonction en message general dans le chat
-      // par exple, mettre if (envoi_dm) ou else...
-//      message.channel.send(result)
+      if (mention.first() != null) {  // retour par message prive
+        let envoi = false
+        mention.forEach((destinataire) => {
+          arguments.pop(arguments.indexOf(destinataire))
+          if (!destinataire.bot && String(destinataire.presence.status) == 'online') {
+            destinataire.send("Résultat de *" + msg +"* par " + message.author.username)
+            destinataire.send(result)
+            envoi = true
+          } else if (destinataire.bot) {
+            message.reply(destinataire.username + " est un bot")
+          } else if (String(destinataire.presence.status) != 'online') {
+            message.reply(destinataire.username + " est absent")
+          }
+        })
+        if (!envoi) { message.reply("Aucun destinataire valide") }
+      }
+      else {  // retour fonction sous forme de reponse au commanditaire dans le chat commun
+        message.reply(result)
+      }
     }
+// ------------------------------------------------------------------
   }
   else if (message.content.match(/OUI OU MERDE/i)) { // outil décisionnel
     message.reply(["OUI","OUI","OUI",
