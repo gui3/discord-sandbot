@@ -3,6 +3,6 @@ module.exports = {
   shorthelp: "test présence bot",
   help: "Vérifie si le bot fonctionne, si oui, il répond **Pong!**",
   function: function () {
-    message.reply("**Pong!**")
+    return "**Pong!**"
   }
 };

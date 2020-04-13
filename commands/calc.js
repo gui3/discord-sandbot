@@ -23,16 +23,16 @@ module.exports = {
     else {
       result = eval(calcString);
     }
-    var reply = "";
+    var reponse = "";
     if (results.length > 0) {
-      reply += "Resultats des dés :";
+      reponse += "Resultats des dés :"
       results.forEach(r => {
-        reply += "\n" + r.string +" : "+r.dices
+        reponse += "\n" + r.string +" : "+r.dices
       })
-      reply += "\nCalcul intermédiaire : "+calcString + "\n";
+      reponse += "\nCalcul intermédiaire : "+calcString + "\n";
     }
-    reply += "Resultat : **"+ result + "**";
+    reponse += "Resultat : **"+ result + "**";
 
-    message.reply(reply)
+    return reponse
   }
 };

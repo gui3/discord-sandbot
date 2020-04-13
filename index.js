@@ -2,8 +2,6 @@ const Discord = require('discord.js');
 const fs = require("fs");
 require('dotenv').config();
 
-// commentaire
-
 const client = new Discord.Client();
 client.botVars = {}
 
@@ -59,52 +57,71 @@ fs.readdir("./commands", (err, files) => {
 
 const Debugger = require("./helpers/Debugger")
 
+
+
+// NEW MESSAGE IN TEXT CHAT --------------------
 client.on("message", message => {
 
 //  if (message.content.startsWith(message.guild.guildVars.prefix)) {
     // ligne ci-dessus ne fonctionne pas avec '<client>.send()' (code original de Guillaume)
-    // correction proposee: prefix est defini par une 'const' (modif Corentin)
-    // 'message.guild.guildVars.prefix = prefix'
+    // correction proposee ci-dessous: 'prefix' est defini par une 'const'
   if (message.content.startsWith(prefix)) {
-    // message commence par prefixe
-    // you talking to the bot
+    // le message commence par 'prefix' -> instruction pour le bot
+
+// ----- definition variable 'arguments' ---------------------
     var msg = message.content.toLowerCase()
+    // esperer que .toLowerCase() n'affecte pas les mentions
     var arguments = msg.slice(prefix.length).split(/[ \r\n]+/)
     // le code ne distinguera pas les majuscules apres '!'
+// ----- definition variable 'command' -----------------------
     var command = arguments.shift()
+    // .shift() permet de retirer le 1er elmt d'un tableau et de renvoyer cet élmt
+// -----------------------------------------------------------
 
     const debug = new Debugger(message);
     debug.silent = !arguments.includes("debug")
 
     if (arguments.includes("debug")) {
       arguments.pop(arguments.indexOf("debug"))
-    };
-
-    message.reply(
-      "commande *" + msg + "*" +
-      (debug.silent ? "\n" : " --DEBUG MODE activé\n")
-    )
-
-    let result;
-
-    if (client.botVars.commands[command]) {
-      let c = client.botVars.commands[command]
-      try {
-
+      // .pop() supprime le dernier elmt d'un tableau et retourne cet elmt
+      // .indexOf() method returns the position of the 1st occurrence of a specified value in a string
+    }
 
 // ----- envoi d'un message privé à celui qui lance la commande ----------
 //        message.delete()  // supprime message (pas d'autorisation)
 //        message.author.send("Message privé en DM")  // message prive
 // ----- message prive aux personnes mentionnees -------------------------
-//        let mention = message.mentions.users
-//        mention.forEach((destinataire) => {
-//          if (!destinataire.bot) {
-//            destinataire.send("Coucou")
-//          }
-//        })
+    let envoi_dm = false
+    let mention = message.mentions.users
+    if (mention.first() !== null) {  // >1 mention dans le message
+      mention.forEach((destinataire) => {
+        arguments.pop(arguments.indexOf(destinataire))
+        if (!destinataire.bot && String(destinataire.presence.status) == 'online') {
+          destinataire.send("Résultat de *" + msg +"* par " + message.author.username)
+          envoi_dm = true
+        } else if (String(destinataire.presence.status) != 'online') {
+          message.reply(destinataire.username + " est absent")
+        } else if (destinataire.bot) {
+          message.reply(destinataire.username + " est un bot")
+        }
+      })
+      if (envoi_dm) {
+        message.reply("Résultat de *" + msg + "* envoyé en DM")
+      } else {
+        message.reply("Aucun destinataire valide")
+        return;  // annule la fonction
+      }
+    }
 // -----------------------------------------------------------------------
 
+    message.reply("commande *" + msg + "*" +
+      (debug.silent ? "\n" : " --DEBUG MODE activé\n"))
 
+    let result  // resultat fonction (sous forme texte)
+
+    if (client.botVars.commands[command]) {
+      let c = client.botVars.commands[command]
+      try {
         if (c.async) {
           c.function(arguments, message, debug)
           .then(result => message.reply(
@@ -123,18 +140,17 @@ client.on("message", message => {
     else {
       message.reply("commande inconnue ...")
     }
-
     message.delete().catch(err=>{
       debug.say("*j'ai pas la permission de supprimer des messages*")
     });
     if (result) {
-      // retour fonction sous forme de reponse au commanditaire
-//      message.reply(result)
-      // retour fonction peut etre un message general dans le chat
-      message.channel.send(result)
+      // retour fonction sous forme de reponse au commanditaire dans le chat commun
+      message.reply(result)
+      // retour fonction en message general dans le chat
+      // par exple, mettre if (envoi_dm) ou else...
+//      message.channel.send(result)
     }
   }
-
   else if (message.content.match(/OUI OU MERDE/i)) { // outil décisionnel
     message.reply(["OUI","OUI","OUI",
       "MERDE","MERDE","MERDE",
@@ -142,6 +158,7 @@ client.on("message", message => {
       [Math.floor(Math.random() * 7)]);
   };
 });
+// END ------------------------------
 
 
 // NEW MEMBER --------------------------------

@@ -8,6 +8,6 @@ module.exports = {
     "!mar (stat ennemi 1) (stat ennemi 2) ...\n"+
     "exple: *!mar 40 50 50*",
   function: function (arguments) {
-    message.reply(test_sos(arguments,"mar"))
+    return test_sos(arguments,"mar")
   }
 };

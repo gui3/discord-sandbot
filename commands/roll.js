@@ -11,17 +11,16 @@ module.exports = {
     if (argument.match(/^(\d+d\d+)$/)) {
       var results = rollDice(argument);
 
-      var reply = "Tirage "+argument
-      reply += "\nRésultat : " + String(results.dices);
+      var reponse = "Tirage "+argument
+      reponse += "\nRésultat : " + String(results.dices);
       if (results.dices.length > 1) {
-        reply += "\nTotal : **"+results.sum+"**";
-        reply += " ; Moyenne : "+results.mean;
+        reponse += "\nTotal : **"+results.sum+"**";
+        reponse += " ; Moyenne : "+results.mean;
       }
-
-      message.reply(reply)
+      return reponse
     }
     else {
-      message.reply("Indique moi le dé a lancer comme ça : *!roll 2d20*")
+      return "Indique moi le dé a lancer comme ça : *!roll 2d20*"
     }
   }
 };

@@ -8,6 +8,6 @@ module.exports = {
     "exple: *!sos 40 50 50*\n"+
     "si le PJ a l'atout martyr, utiliser *!mar* à la place",
   function: function (arguments) {
-    message.reply(test_sos(arguments,"sos"))
+    return test_sos(arguments,"sos")
   }
 };

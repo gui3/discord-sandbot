@@ -1,5 +1,5 @@
 const test_tir = require("../helpers/test_tir");
-const dist_max = 150
+const dist_max = 150  // distance maximum de tir autorisee
 
 module.exports = {
   name: "tir",
@@ -10,10 +10,11 @@ module.exports = {
           "le modificateur peut être négatif, la distance doit être <" + dist_max + "\n" +
           "le code renvoie la valeur blessure et l'indicateur de dégâts de l'arme\n",
   function: function (arguments, message, debug) {
+    var reponse = ""
     if (!process.externalData) {
-      message.reply("je n'ai pas les données pour le tir,\n"+
-        "merci de lancer la commande *!loaddata*")
-      return  // pour stopper la fonction
+      reponse += "Je n'ai pas les données pour le tir,\n"+
+                  "merci de lancer la commande *!loaddata*"
+      return reponse // pour stopper la fonction
     }
     var [arme, dist, modif] = arguments
     if (parseInt(dist) >= 0 && typeof parseInt(modif) === "number") {
@@ -28,7 +29,7 @@ module.exports = {
           let arme_x1 = process.externalData.dd_tir[arme]['x1']
           // faire appel à test_tir
           debug.say('je lance le test de tir')
-          message.reply(test_tir(dist,modif,arme_x1,arme_id))
+          reponse += test_tir(dist,modif,arme_x1,arme_id)
         } else {  // arme non reconnue
           listing = ''
           for (let weapon of Object.keys(process.externalData.dd_tir)) {
@@ -37,16 +38,15 @@ module.exports = {
                 process.externalData.dd_tir[weapon]['name'] + '\n'
             }
           }
-          message.reply("Erreur: arme non valide\n  Armes disponibles:\n" + listing)
+          reponse += "Erreur: arme non valide\n  Armes disponibles:\n" + listing
         }
-      } else {  // distance >150
-        message.reply("Distance trop grande, on ne peut pas viser à cette distance\n")
+      } else {  // distance > dist_max
+        reponse += "Distance trop grande, on ne peut pas viser à cette distance\n"
       }
     }
     else {  // distance ou modificateur non valide
-      message.reply(
-        "Commande non valide: (!tir code_arme distance modificteur)\n  ex: !tir abc 30 44\n"
-      )
+      reponse += "Commande non valide: (!tir code_arme distance modificteur)\n  ex: *!tir abc 30 44*\n"
     }
+    return reponse
   }
 };
