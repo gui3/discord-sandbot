@@ -71,8 +71,7 @@ client.on("message", message => {
 // ----- definition variable 'arguments' ---------------------
     // var msg = message.content.toLowerCase()
     // esperer que .toLowerCase() n'affecte pas les mentions
-    var arguments = message.content.toLowerCase()
-      .slice(prefix.length).split(/[ \r\n]+/)
+    var arguments = message.content.toLowerCase().slice(prefix.length).split(/[ \r\n]+/)
     // le code ne distinguera pas les majuscules apres '!'
 // ----- definition variable 'command' -----------------------
     var command = arguments.shift()
@@ -102,7 +101,8 @@ client.on("message", message => {
     let sendReply // La future fonction pour repondre
     if (mentions.first() != null) {  // >1 mention dans le message
       message.reply("Résultat de *" + msg + "* sera envoyé en DM")
-      // DEFINITION DE LA FONCTION DE REPONSE
+
+// ---------- DEFINITION DE LA FONCTION DE REPONSE ------------------------------
       sendReply = function (message, text) {
         let envoi = false
         message.mentions.users.forEach((destinataire) => {
@@ -118,6 +118,8 @@ client.on("message", message => {
         })
         if (!envoi) { message.reply("Aucun destinataire valide") }
       }
+// ------------------------------------------------------------------------------
+
     } else {  // pas de mention dans le message
       message.reply("commande *" + msg + "*" +
         (debug.silent ? "\n" : " ---DEBUG MODE activé"))

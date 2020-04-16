@@ -25,13 +25,13 @@ module.exports = {
     }
     var reponse = "";
     if (results.length > 0) {
-      reponse += "Resultats des dés :"
+      reponse += "Résultats des dés :"
       results.forEach(r => {
         reponse += "\n" + r.string +" : "+r.dices
       })
       reponse += "\nCalcul intermédiaire : "+calcString + "\n";
     }
-    reponse += "Resultat : **"+ result + "**";
+    reponse += "Résultat : **"+ result + "**";
 
     return reponse
   }

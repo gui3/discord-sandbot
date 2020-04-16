@@ -1,4 +1,5 @@
-const test_tir = require("../helpers/test_tir");
+const test_tir = require("../helpers/test_tir")
+const liste_arme_tir = require("../helpers/liste_arme_tir")
 const dist_max = 150  // distance maximum de tir autorisee
 
 module.exports = {
@@ -14,6 +15,7 @@ module.exports = {
     if (!process.externalData) {
       reponse += "Je n'ai pas les données pour le tir,\n"+
                   "merci de lancer la commande *!loaddata*"
+      // possibilite que le 1er appel de la fonction tir execute automatiquement !loaddata
       return reponse // pour stopper la fonction
     }
     var [arme, dist, modif] = arguments
@@ -21,9 +23,6 @@ module.exports = {
       if (parseInt(dist) <= dist_max) {
         // lire "arme"
         if (Object.keys(process.externalData.dd_tir).includes(arme) && arme !== '_distance') {
-          // extraire le tableau des dd "dd_tabl" en fonction de l'arme
-          //let dd_table = process.externalData.dd_tir[arme]['dd']
-          //let dist_table = process.externalData.dd_tir['_distance']['dd']
           // extraire ID(2) de l'arme et variable x1 pour fonction de DD de tir
           let arme_id = process.externalData.dd_tir[arme]['id']
           let arme_x1 = process.externalData.dd_tir[arme]['x1']
@@ -31,21 +30,15 @@ module.exports = {
           debug.say('je lance le test de tir')
           reponse += test_tir(dist,modif,arme_x1,arme_id)
         } else {  // arme non reconnue
-          listing = ''
-          for (let weapon of Object.keys(process.externalData.dd_tir)) {
-            if (weapon !== '_distance') {
-              listing += weapon + " : " +
-                process.externalData.dd_tir[weapon]['name'] + '\n'
-            }
-          }
-          reponse += "Erreur: arme non valide\n  Armes disponibles:\n" + listing
+          reponse += "Erreur: arme non valide\n"
+          reponse += liste_arme_tir()
         }
       } else {  // distance > dist_max
         reponse += "Distance trop grande, on ne peut pas viser à cette distance\n"
       }
     }
     else {  // distance ou modificateur non valide
-      reponse += "Commande non valide: (!tir code_arme distance modificteur)\n  ex: *!tir abc 30 44*\n"
+      reponse += "Commande non valide: (!tir code_arme distance modificteur)\nex: *!tir abc 30 44*\n"
     }
     return reponse
   }
