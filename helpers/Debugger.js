@@ -14,8 +14,8 @@ const Debugger = function (message, silent=false) {
   };
   this.error = function (text) {
     if (this.silent) {
-      console.error("*Erreur- lancer le mode debug*");
-      this.message.reply("*Erreur- lancer le mode debug*")
+      console.error("*Erreur- lancer le mode debug*")
+      this.message.reply("*Erreur - lancer le mode debug*")
     }
     else {
       this.say(text)

@@ -8,3 +8,4 @@ events/*
 package-lock.json
 
 instructions.txt
+../commands/init.js
