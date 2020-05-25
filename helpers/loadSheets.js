@@ -1,5 +1,9 @@
 const { google } = require('googleapis');
 
+//-----------------------------------------------------
+// récupère des données sauvées sur un Google Sheets
+// pour être exploitées par d'autres fonctions
+//-----------------------------------------------------
 
 module.exports = async (message, debug) => {
   const fullLink = "https://docs.google.com/spreadsheets/d/1Bny-ZsCG_oUuS0nTbR-7tBBZu47_ncS9qGYaMpuprWU/edit#gid=0"

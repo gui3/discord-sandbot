@@ -1,6 +1,6 @@
 const rollDice = require("./rollDice");
 
-module.exports = (dist,modif,arme_x1,id_arme) => {
+module.exports = (dist,modif,id_arme) => {
 
   // preambule : tableau des valeurs-blessure
   var id_table = [2,2,2,4,4,4,5,5,6,6];
@@ -33,9 +33,9 @@ module.exports = (dist,modif,arme_x1,id_arme) => {
 //  }
 
   // ----- determination dd de tir ---------- (fonction exponentielle)
-  let [delta,y0,y1] = [1,5,50]
-  let a = y1-y0-arme_x1*delta
-  let b = 2.5/arme_x1
+  let [delta,y0,y1,x1] = [1,5,50,15]
+  let a = y1-y0-x1*delta
+  let b = 3.0/x1
   let dd = Math.round(a*(1-Math.exp(-b*dist))+y0+delta*dist)
 
   reply += "Degré de difficulté: " + dd + "\n";
@@ -50,10 +50,12 @@ module.exports = (dist,modif,arme_x1,id_arme) => {
     // indication textuelle type de blessure
     switch(inddegats) {  // precision de l'indic degats adapte de l'arme si besoin
       case 2:
-        reply += " entravante) ; ID(2) " + id_arme + "\n";
+        reply += " entravante)";
+        if (id_arme !== -1) {reply += " => ID(2) " + 1*id_arme + "\n"}  else {reply += "\n"}
         break;
       case 4:
-        reply += " grave) ; ID(4) " + 3*id_arme + "\n";
+        reply += " grave)";
+        if (id_arme !== -1) {reply += " => ID(4) " + 3*id_arme + "\n"} else {reply += "\n"}
         break;
       case 5:
         reply += " mortelle)\n";

@@ -3,12 +3,12 @@ const loadSheets = require('../helpers/loadSheets')
 module.exports = {
   name: "init",
   shorthelp: "À lancer en début de partie",
-  help: "Charge les données externes (depuis une Google SpreadSheet)",
+  help: "Charge les données externes (depuis une Google SpreadSheet) en début de partie",
   async: true,
   function: function (arguments, message, debug) {
     message.reply("Lancement de la partie et chargement des donnés\n")
 
-    // loadData
+    // loadSheets
     debug.say("je tente de charger la spreadsheet")
     loadSheets(message, debug)
       .then(stored => {
