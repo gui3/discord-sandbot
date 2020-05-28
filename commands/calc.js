@@ -6,6 +6,7 @@ module.exports = {
   help: "Calcul (+ - * /) avec jets de dés et nombres\n" +
         "exple: *1d40 +5 /2d20*",
   function: function (arguments) {
+    var precision = 2   // nombre de chiffres apres la virgule
     var results = [];
     var argumentString = arguments.join(" ");
     var calcString = argumentString;
@@ -29,10 +30,12 @@ module.exports = {
       results.forEach(r => {
         reponse += "\n" + r.string +" : "+r.dices
       })
-      reponse += "\nCalcul intermédiaire : "+calcString + "\n";
+      reponse += "\nCalcul intermédiaire : "+calcString+"\n";
     }
-    reponse += "Résultat : **"+ result + "**";
 
+    var power = 10**precision;
+    result = Math.round(result*power)/power;
+    reponse += "Résultat : **"+ result + "**\n";
     return reponse
   }
 };

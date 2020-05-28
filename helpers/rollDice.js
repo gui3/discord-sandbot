@@ -1,4 +1,4 @@
-module.exports = (diceString, precision=1) => {
+module.exports = (diceString) => {
   var [dices, faces] = diceString.split("d").map(x => parseInt(x));
   var results = {
       string: diceString,
@@ -12,9 +12,7 @@ module.exports = (diceString, precision=1) => {
   };
 
   results.sum = results.dices.reduce((a,b)=>a+b);
-
-  var power = 10**precision;
-  results.mean = Math.round(results.sum/results.dices.length*power)/power;
+  results.mean = results.sum/results.dices.length;
 
   return results
 }

@@ -19,24 +19,14 @@ module.exports = (dist,modif,id_arme) => {
     reply += " -> Succès critique :green_circle:\n";
   }
 
-  // ----- lire dd en fonction de la distance ---------- (version precedente)
-//  var ind = 0;  // indice lecture tableau
-//  while (dist > dist_table[ind]) {
-//    ind++;
-//  }
-//  // determination du dd pour une distance intermédiaire
-//  if (ind >= 1) {
-//    var dd = (dd_table[ind]-dd_table[ind-1])*(dist-dist_table[ind-1])/(dist_table[ind]-dist_table[ind-1])+dd_table[ind-1];
-//    dd = Math.round(dd);
-//  } else {
-//    var dd = dd_table[0];
-//  }
-
   // ----- determination dd de tir ---------- (fonction exponentielle)
-  let [delta,y0,y1,x1] = [1,5,50,15]
-  let a = y1-y0-x1*delta
-  let b = 3.0/x1
-  let dd = Math.round(a*(1-Math.exp(-b*dist))+y0+delta*dist)
+  let delta = 1   // taux d'accroissement lineaire du dd au delà de x1
+  let y0 = 7      // dd distance de 1 metre
+  let x1 = 15
+  let y1 = 50     // dd cible a distance x1
+  let b = 3.0     // parametre d'exponentielle
+  let a = y1-delta*(x1-1)-y0
+  let dd = Math.round(a*(1-Math.exp(-b*(dist-1)/(x1-1)))+delta*(dist-1)+y0)
 
   reply += "Degré de difficulté: " + dd + "\n";
   // analyse du resultat
