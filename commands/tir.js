@@ -1,10 +1,10 @@
 const test_tir = require("../helpers/test_tir")
 const liste_arme_tir = require("../helpers/liste_arme_tir")
-const dist_max = 100  // distance maximum de tir autorisee
+const dist_max = 150  // distance maximum de tir autorisee
 
 module.exports = {
   name: "tir",
-  shorthelp: "test de tir",
+  shorthelp: "Test de tir",
   help: "Test de tir sur cible fixe, selon distance et modificateur\n" +
           "!tir (code_arme) distance modificateur\n" +
           "exple: *!tir 30 44* ou *!tir abc 30 44* -> cible à 30 m avec modif de +44\n" +

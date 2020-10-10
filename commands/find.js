@@ -4,7 +4,7 @@ const youtube = new Youtube(process.env.GOOGLE_API_KEY);
 
 module.exports = {
   name: "find",
-  shorthelp: "recherche sur Youtube et affiche la video",
+  shorthelp: "Recherche sur Youtube et affiche la video",
   help: "Cherche les mots indiqués sur Youtube et affiche la video",
   async: true,
   function: async function (arguments, message) {
