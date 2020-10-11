@@ -8,11 +8,11 @@ module.exports = {
   function: function (arguments) {
 
     var argument = arguments.join("");
-    if (argument.match(/^(\d+d\d+)$/)) {
+    if (argument.match(/^(\d*d\d+)$/)) {
       var results = rollDice(argument);
 
-      var reponse = "Tirage "+argument
-      reponse += "\nRésultat : " + String(results.dices);
+      var reponse = "Tirage "+results.string
+      reponse += "\nRésultat : " + results.dices.join(", ")
       if (results.dices.length > 1) {
         reponse += "\nTotal : **"+results.sum+"**\n";
 //        reponse += "Moyenne : **"+results.mean+"**\n";

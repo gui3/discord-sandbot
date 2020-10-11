@@ -38,17 +38,15 @@ module.exports = {
       if (results.length > 0) {
         reponse += "Résultats des dés :"
         results.forEach(r => {
-          reponse += "\n" + r.string + " : " + r.dices
+          reponse += "\n" + r.string + " : " + r.dices.join(", ")
           if (r.dices.length > 1) {
             reponse += " (="+ r.sum + ")"
           }
         })
-        reponse += "\nCalcul intermédiaire : "+calcString+"\n";
-        reponse += "Résultat : **"+ total + "**\n";
-        return reponse
-      } else {
-        return "Commande vide"
       }
+      reponse += "\nCalcul intermédiaire : "+calcString+"\n";
+      reponse += "Résultat : **"+ total + "**\n";
+      return reponse
     }
   }
 };
