@@ -100,7 +100,7 @@ client.on("message", message => {
     let msg = [prefix+command, ...arguments].join(' ')
     let sendReply // La future fonction pour repondre
     if (mentions.first() != null) {  // >1 mention dans le message
-      message.reply("Résultat de *" + msg + "* sera envoyé en DM")
+      message.reply("Résultat envoyé en DM")
 
 // ---------- DEFINITION DE LA FONCTION DE REPONSE ------------------------------
       sendReply = function (message, text) {
