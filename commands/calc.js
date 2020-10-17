@@ -13,12 +13,12 @@ module.exports = {
     var total
     var calcString = arguments.join(" ")
 //    var diceRex = /\d+d\d+/
-    var diceRex = /\d*d\d+/    // version modifié par Corentin
+    var diceRex = /\d*d\d+/    // version modifiée par Corentin
     // \d : Correspond à un nombre
     // + : Correspond à l'expression précédente qui est répétée une ou plusieurs fois
     // * : Correspond à l'expression précédente qui est répétée 0 ou plusieurs fois
     // ici je mets '*' au lieu du '+' => si il n'y a aucun chiffre avant
-    // avant le 'd', le prog ajoutera automatiquement un '1'
+    // avant le 'd', le prog devra ajouter un '1' (voir rolDice)
     // 'd100' est traité comme '1d100'
     while (calcString.match(diceRex)) {
       var dice = calcString.match(diceRex)[0];

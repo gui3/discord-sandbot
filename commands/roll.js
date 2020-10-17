@@ -12,10 +12,12 @@ module.exports = {
       var results = rollDice(argument);
 
       var reponse = "Tirage "+results.string
-      reponse += "\nRésultat : " + results.dices.join(", ")
       if (results.dices.length > 1) {
+        reponse += "\nRésultat : " + results.dices.join(", ")
         reponse += "\nTotal : **"+results.sum+"**\n";
 //        reponse += "Moyenne : **"+results.mean+"**\n";
+      } else {
+        reponse += " : **"+results.dices+"**"
       }
       return reponse
     }

@@ -68,15 +68,15 @@ client.on("message", message => {
   if (message.content.startsWith(prefix)) {
     // le message commence par 'prefix' -> instruction pour le bot
 
-// ----- definition variable 'arguments' ---------------------
-    // var msg = message.content.toLowerCase()
-    // esperer que .toLowerCase() n'affecte pas les mentions
+// ---------- definition variable 'arguments' ----------------------------------
     var arguments = message.content.toLowerCase().slice(prefix.length).split(/[ \r\n]+/)
     // le code ne distinguera pas les majuscules apres '!'
-// ----- definition variable 'command' -----------------------
+    // .toLowerCase() n'affecte pas les mentions
+
+// ---------- definition variable 'command' ------------------------------------
     var command = arguments.shift()
     // .shift() permet de retirer le 1er elmt d'un tableau et de renvoyer cet élmt
-// -----------------------------------------------------------
+    // comand crrespond à la fonction que l'utilisateur veut appeler
 
     const debug = new Debugger(message);
     debug.silent = !arguments.includes("debug")
@@ -87,10 +87,7 @@ client.on("message", message => {
       // .indexOf() method returns the position of the 1st occurrence of a specified value in a string
     }
 
-// ----- envoi d'un message privé à celui qui lance la commande ----------
-//        message.delete()  // supprime message (pas d'autorisation)
-//        message.author.send("Message privé en DM")  // message prive
-// ----- message prive aux personnes mentionnees -------------------------
+// ---------- retirer les mentions dans la var arguments -----------------------
     let mentions = message.mentions.users
     mentions.forEach((destinataire) => {
       // déplacé ici pour que arguments soit nettoyé avant processing
@@ -100,27 +97,37 @@ client.on("message", message => {
     let msg = [prefix+command, ...arguments].join(' ')
     let sendReply // La future fonction pour repondre
     if (mentions.first() != null) {  // >1 mention dans le message
-      message.reply("Résultat envoyé en DM")
-
-// ---------- DEFINITION DE LA FONCTION DE REPONSE ------------------------------
+// ---------- ENVOI DE LA REPONSE EN PRIVE AUX MENTIONS ------------------------
       sendReply = function (message, text) {
         let envoi = false
+        let receveurs = []
         message.mentions.users.forEach((destinataire) => {
           if (!destinataire.bot && String(destinataire.presence.status) == 'online') {
-            destinataire.send("Résultat de *" + message.content +"*")
+            // la mention designe un utilisateur connecté et qui n'est pas un bot
+            if (message.author.id === destinataire.id) {
+              destinataire.send("Résultat de ta commande *" + msg +"*")
+            } else {
+              // tierce personne, nom de l'auteur de la commande est précisé
+              destinataire.send("Résultat de *" + msg +"* envoyé par "+message.author.username)
+            }
             destinataire.send(text)
+            receveurs.push(destinataire.username)
             envoi = true
           } else if (destinataire.bot) {
             message.reply(destinataire.username + " est un bot")
           } else if (String(destinataire.presence.status) != 'online') {
-            message.reply(destinataire.username + " est absent")
+            message.reply(destinataire.username + " n'est pas en ligne")
           }
         })
-        if (!envoi) { message.reply("Aucun destinataire valide") }
+        if (!envoi) {
+          message.reply("Aucun destinataire valide")
+        }
+        else {
+          message.reply("Résultat envoyé en privé à " + receveurs.join(", "))
+        }
       }
-// ------------------------------------------------------------------------------
-
     } else {  // pas de mention dans le message
+// ---------- EXECUTION NORMALE AVEC AFFICHAGE CHAT TEXTUEL --------------------
       message.reply("commande *" + msg + "*" +
         (debug.silent ? "\n" : " ---DEBUG MODE activé"))
       // sendReply par défaut
