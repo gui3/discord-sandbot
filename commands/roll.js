@@ -11,6 +11,10 @@ module.exports = {
     if (argument.match(/^(\d*d\d+)$/)) {
       var results = rollDice(argument);
 
+      if (results.sum == 0) {
+        return "Erreur de commande\n"
+      }
+
       var reponse = "Tirage "+results.string
       if (results.dices.length > 1) {
         reponse += "\nRésultat : " + results.dices.join(", ")
