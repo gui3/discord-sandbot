@@ -7,7 +7,7 @@ module.exports = {
     "!sos (stat ennemi 1) (stat ennemi 2) ...\n"+
     "exple: *!sos 40 50 50*\n"+
     "si le PJ a l'atout martyr, utiliser *!mar* à la place",
-  function: function (arguments) {
-    return test_sos(arguments,"sos")
+  function: function (arguments,message) {
+    return test_sos(arguments,"sos",message)
   }
 };

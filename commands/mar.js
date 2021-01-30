@@ -7,7 +7,7 @@ module.exports = {
     "pour un personnage possédant l'**atout martyr**\n"+
     "!mar (stat ennemi 1) (stat ennemi 2) ...\n"+
     "exple: *!mar 40 50 50*",
-  function: function (arguments) {
-    return test_sos(arguments,"mar")
+  function: function (arguments,message) {
+    return test_sos(arguments,"mar",message)
   }
 };

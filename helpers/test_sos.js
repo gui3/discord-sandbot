@@ -1,6 +1,6 @@
 const rollDice = require("./rollDice");
 
-module.exports = (arguments,type) => {
+module.exports = (arguments,type,message) => {
 
   var results = [];
   var ignored = [];  // arguments qui ne sont pas reconnus comme des nombres
@@ -8,6 +8,11 @@ module.exports = (arguments,type) => {
   var n = 0;  // nombre d'avdersaires
   var total = 0;
   var de_critiq = 0;
+
+  var gif01 = ['https://media.giphy.com/media/Qi2pBNdPf76QU/giphy.gif',    // chick wasted
+               'https://media.giphy.com/media/Zf5c3sMjJgP5e/giphy.gif',    // alexandre astier
+               'https://media.giphy.com/media/l0ExmGmzscjdOYbXG/giphy.gif' // antoine daniel
+             ]
 
 // ---------- tests combat successifs -----------------------------------
   arguments.forEach((arg, ix) => {
@@ -96,8 +101,14 @@ module.exports = (arguments,type) => {
   }
   switch (type) {
     case "sos":
-    total = total+de_critiq
+      total = total+de_critiq
       reply += "\nRésultat cumulé : **" + total + "**"
+      // en cas d'echec critique, et avec la commande !sos, un gif est affiché dans le chat
+      if (n==1 && results[0].dice<=6) {  // echec critique
+        var index = Math.floor(Math.random()*gif01.length);
+        message.reply(gif01[index])
+      }
+      // fin gif
       break;
     case "mar":
       total = Math.round(total/n+de_critiq)
