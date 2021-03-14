@@ -2,20 +2,15 @@ const Discord = require('discord.js');
 const fs = require("fs");
 require('dotenv').config();
 
-// to parse CONFIG.yaml ----------------------
-const yaml = require("yaml") 
-const path = require("path")
-
-const config = yaml.parse(
-  fs.readFileSync(
-    path.join(__dirname, "./CONFIG.yaml")
-  )
-)
-
 const client = new Discord.Client();
 client.botVars = {}
 
 const prefix = "!"
+
+// ------------------------------------------
+const TURN_OFF = false 
+// true pour empecher le bot de se connecter a discord
+// et te permettre de tester en local
 
 // READY -------------------------------------
 function botReboot(guild) {
@@ -193,7 +188,7 @@ client.on("guildMemberAdd", (client, member) => {
 
 // CONNECTION ---------------------------------
 client.login(
-  config.TURN_OFF
+  TURN_OFF
   ? console.log("not connected!") && null // no connection to discord
   : process.env.BOT_TOKEN
 )
