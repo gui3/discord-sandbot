@@ -1,0 +1,4 @@
+
+TURN_OFF: false
+# true pour déconnecter le bot de discord
+# à utiliser pour tester le bot en local

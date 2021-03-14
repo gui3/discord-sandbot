@@ -2,6 +2,16 @@ const Discord = require('discord.js');
 const fs = require("fs");
 require('dotenv').config();
 
+// to parse CONFIG.yaml ----------------------
+const yaml = require("yaml") 
+const path = require("path")
+
+const config = yaml.parse(
+  fs.readFileSync(
+    path.join(__dirname, "./CONFIG.yaml")
+  )
+)
+
 const client = new Discord.Client();
 client.botVars = {}
 
@@ -83,8 +93,8 @@ client.on("message", message => {
 
     if (arguments.includes("debug")) {
       arguments.pop(arguments.indexOf("debug"))
-      // .pop() supprime le dernier elmt d'un tableau et retourne cet elmt
-      // .indexOf() method returns the position of the 1st occurrence of a specified value in a string
+      // .pop() supprime le dernier elmt d'un tableau et retourne cet elmton of the 1st occurrence of a specified valu
+      // .indexOf() method returns the positie in a string
     }
 
 // ---------- retirer les mentions dans la var arguments -----------------------
@@ -182,4 +192,8 @@ client.on("guildMemberAdd", (client, member) => {
 })
 
 // CONNECTION ---------------------------------
-client.login(process.env.BOT_TOKEN)
+client.login(
+  config.TURN_OFF
+  ? console.log("not connected!") && null // no connection to discord
+  : process.env.BOT_TOKEN
+)
