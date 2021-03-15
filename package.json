@@ -11,6 +11,7 @@
   "dependencies": {
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "ffmpeg-static": "^2.7.0",
     "googleapis": "^48.0.0",
     "opusscript": "0.0.7",

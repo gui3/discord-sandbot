@@ -12,7 +12,37 @@ const TURN_OFF = false
 // true pour empecher le bot de se connecter a discord
 // et te permettre de tester en local
 
+// express server -------------------------------
+// pour afficher l'état du bot sur 
+// https://palamede-bot.glitch.me
+const express = require("express")
+const app = express()
+
+// variable pour voir l'état du bot
+let CONNECTED = false
+
+
+app.get("/", (req, res) => {
+  res.send(`
+<style>
+* {
+  background: #112;
+  color: #f7a;
+  font-family: monospace;
+}
+</style>
+<h1>le bot est <em>${CONNECTED ? "CONNECTE" : "HORS-LIGNE"}</em></h1>
+<p>Rafraichissez la page pour connaitre l'état du bot discord.</p>
+  `)
+})
+
+const PORT = process.env.PORT || 5000
+app.listen(PORT, _ => {
+  console.log("server listenning on port " + PORT)
+})
+
 // READY -------------------------------------
+
 function botReboot(guild) {
   function getFirstChan () {
     return guild.channels.array().sort((a,b)=>a.createdAt-b.createdAt);
@@ -191,4 +221,6 @@ client.login(
   TURN_OFF
   ? console.log("not connected!") && null // no connection to discord
   : process.env.BOT_TOKEN
-)
+).then(_ => {
+  CONNECTED = true
+}).catch(err => console.error(err))
