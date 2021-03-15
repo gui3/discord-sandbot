@@ -45,7 +45,7 @@ app.listen(PORT, _ => {
 
 function botReboot(guild) {
   function getFirstChan () {
-    return guild.channels.array().sort((a,b)=>a.createdAt-b.createdAt);
+    return guild.channels.cache.array().sort((a,b)=>a.createdAt-b.createdAt);
   };
   guild.guildVars = {
     prefix: prefix,
@@ -61,7 +61,7 @@ function botReboot(guild) {
 
 client.on("ready", c => {
   console.log(`Logged in !`);
-  client.guilds.forEach(guild => {
+  client.guilds.cache.each(guild => {
     console.log('Connected to guild : ' + guild.name);
     botReboot(guild);
   });
